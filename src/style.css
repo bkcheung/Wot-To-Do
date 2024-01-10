@@ -1,10 +1,52 @@
 html, body {
     margin: 0px;
-}
-.header {
     font-family: 'Roboto-light', sans-serif;
-    font-size: 50px;
     color: rgb(16, 60, 24);
-    background-color: rgb(189, 216, 189);
+    /* background-color: rgb(234, 251, 234); */
+
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+}
+
+.pageBody{
+    flex: 1;
+    display: flex;
+}
+
+.header {
+    font-size: 50px;
+    background-color: rgb(165, 211, 165);
     padding: 30px;
+    width: calc(100%-30px);
+    height: 60px;
+}
+
+.projList {
+    flex: 1;
+    font-size: 30px;
+    background-color: rgb(197, 243, 197);
+    padding: 30px;
+    min-height: calc(100vh - 60px);
+}
+
+.taskList{
+    flex: 8;
+    font-size: 30px;
+    background-color: rgb(234, 251, 234);
+    padding: 30px;
+}
+
+.footer {
+    background-color: rgb(165, 211, 165);
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.github {
+    color: white;
+    text-decoration: none;
 }
