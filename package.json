@@ -1,0 +1,37 @@
+{
+  "name": "wot-to-do",
+  "version": "1.0.0",
+  "description": "Wot To Do is a to do list one can use to track what they need to do. </br> It uses: </br> * Factory functions",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve --open",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bkcheung/Wot-To-Do.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bkcheung/Wot-To-Do/issues"
+  },
+  "homepage": "https://github.com/bkcheung/Wot-To-Do#readme",
+  "devDependencies": {
+    "css-loader": "^6.9.0",
+    "csv-loader": "^3.0.5",
+    "express": "^4.18.2",
+    "html-webpack-plugin": "^5.6.0",
+    "style-loader": "^3.3.4",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-middleware": "^7.0.0",
+    "webpack-dev-server": "^4.15.1",
+    "xml-loader": "^1.2.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
