@@ -2,13 +2,13 @@ html, body {
     margin: 0px;
     font-family: 'Roboto-light', sans-serif;
     color: rgb(16, 60, 24);
-    /* background-color: rgb(234, 251, 234); */
-
+    height: 100%;
 }
 
 .page {
     display: flex;
     flex-direction: column;
+    min-height: 100%;
 }
 
 .pageBody{
@@ -21,7 +21,6 @@ html, body {
     background-color: rgb(165, 211, 165);
     padding: 30px;
     width: calc(100%-30px);
-    height: 60px;
 }
 
 .projList {
@@ -29,7 +28,6 @@ html, body {
     font-size: 30px;
     background-color: rgb(197, 243, 197);
     padding: 30px;
-    min-height: calc(100vh - 60px);
 }
 
 .taskList{
@@ -43,6 +41,7 @@ html, body {
     background-color: rgb(165, 211, 165);
     color: white;
     padding: 10px;
+    font-size: 15px;
     text-align: center;
 }
 
