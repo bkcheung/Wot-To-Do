@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import './style.css';
-import addTask from './tasks';
+import createTask from './tasks';
 
 function render() {
     const page = document.createElement('div');
@@ -19,8 +19,11 @@ function render() {
     pageBody.appendChild(projList);
 
     const taskList = document.createElement('div');
-    taskList.innerHTML = "Exercise";
     taskList.classList.add('taskList');
+
+    const task = createTask();
+    taskList.appendChild(task.render());
+
     pageBody.appendChild(taskList);
     page.appendChild(pageBody);
 

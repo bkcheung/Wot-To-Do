@@ -32,9 +32,24 @@ html, body {
 
 .taskList{
     flex: 8;
+    /* display: flex; */
     font-size: 30px;
     background-color: rgb(234, 251, 234);
     padding: 30px;
+}
+
+.task{
+    border: 2px ridge rgba(146, 186, 146, 0.48);
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 20px;
+    font-size: 20px;
+    display: flex;
+
+}
+
+.taskText{
+    margin-right: auto;
 }
 
 .footer {
