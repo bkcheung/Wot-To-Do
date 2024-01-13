@@ -1,7 +1,4 @@
 import { compareAsc, format, sub } from "date-fns";
-import editImage from './edit.png';
-import detailImage from './details.png';
-import delImage from './delete.png';
 
 export function createTask(title, details, dueDate, priority){
     return {
@@ -34,8 +31,8 @@ export function renderTask(task){
     taskText.innerHTML = task.title;
     taskText.classList.add("taskText");
 
-    const descButton = document.createElement('button');
-    descButton.appendChild(detailIcon);
+    const descButton = document.createElement('button')
+    descButton.classList.add('descButton');
     descButton.addEventListener('click', ()=>{
       console.log(task.details);
     });
@@ -44,7 +41,7 @@ export function renderTask(task){
     dDate.innerHTML = task.dueDate;
 
     const modButton = document.createElement('button');
-    modButton.appendChild(editIcon);
+    modButton.classList.add('modButton');
     modButton.addEventListener('click', ()=>{
       let newTitle = prompt("Enter a new title");
       task.title = newTitle;
@@ -52,7 +49,7 @@ export function renderTask(task){
     })
 
     const delButton = document.createElement('button');
-    delButton.appendChild(delIcon);
+    delButton.classList.add('delButton');
 
     switch (task.priority){
       case 'high':
@@ -95,28 +92,28 @@ export function newTaskInput(){
   });
 
   const newTaskButtons = document.createElement('div');
-  // const priorityDropdown = document.createElement('div');
-  // priorityDropdown.classList.add('dropdown');
-  const priButton = document.createElement('input');
-  priButton.classList.add('priButton');
-  priButton.innerHTML = "Priority";
-  const lowButton = document.createElement('button');
-  lowButton.innerHTML = "Low";
-  priButton.appendChild(lowButton);
-  // priorityDropdown.appendChild(priButton);
+  newTaskButtons.classList.add('newTaskButtons');
 
-  const submit = Object.assign(document.createElement('input'),{
-    type: 'button',
-    value: 'Add',
+  const priButton = Object.assign(document.createElement('button'),{
+    classList: 'priButton',
+    innerHTML: 'priority'
   });
 
+  const lowButton = Object.assign(document.createElement('button'),{
+    innerHTML: 'Low',
+  });
+  // priButton.appendChild(lowButton);
+  
+  const submit = Object.assign(document.createElement('input'),{
+    type: 'submit',
+    value: 'Add',
+    classList: 'submit',
+  });
   submit.addEventListener('click', (e)=>{
     processTask(e);
-
   });
 
-
-
+  newTaskButtons.appendChild(priButton);
   newTaskButtons.appendChild(submit);
   // newTaskButtons.appendChild(priButton);
 
@@ -133,21 +130,7 @@ function processTask(e) {
 
   const addTask = createTask(title, details, new Date(), 'low');
   const taskList = document.getElementById('taskList');
-  
+
   taskList.appendChild(renderTask(addTask));
+  e.preventDefault();
 }
-
-
-//Icons
-const editIcon = new Image();
-editIcon.src = editImage;
-editIcon.setAttribute('style','height: 20px;');
-
-const detailIcon = new Image();
-detailIcon.src = detailImage;
-detailIcon.setAttribute('style','height: 16px;');
-
-const delIcon = new Image();
-delIcon.src = delImage;
-delIcon.setAttribute('style','height: 18px;');
-

@@ -9,8 +9,6 @@ button {
     border: none;
     background-color: inherit;
     display:flex;
-    height: 25px;
-    width: 25px;
     align-items: center;
     justify-content: center;
 }
@@ -82,6 +80,30 @@ input {
     margin-right: auto;
 }
 
+.descButton{
+    background-image: url('img/details.png');
+    width: 18px;
+    height: 18px;
+    background-size: contain;
+    margin-right: 5px;
+}
+
+.modButton{
+    background-image: url('img/edit.png');
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    margin: 0px 5px;
+}
+
+.delButton{
+    background-image: url('img/delete.png');
+    width: 19px;
+    height: 19px;
+    background-size: contain;
+    margin-right: 5px;
+}
+
 .newTaskInput{
     border: 2px outset rgba(212, 231, 213, 0.25);
     border-top-right-radius: 5px;
@@ -100,6 +122,15 @@ input {
 
 .newTaskTitle {
     font-size: 20px;
+}
+
+.newTaskButtons {
+    display: flex;
+}
+
+.priButton {
+    border: 1px solid grey;
+    width: auto;
 }
 
 .footer {

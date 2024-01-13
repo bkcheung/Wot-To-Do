@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { compareAsc, format } from "date-fns";
 import './style.css';
 import {createTask, renderTask, newTaskInput} from './tasks';
 
@@ -50,7 +49,6 @@ function render() {
     github.innerHTML = "bkcheung";
     footer.innerHTML = `Copyright © ${year} `;
     footer.appendChild(github);
-
     page.appendChild(footer);
 
     return page;
