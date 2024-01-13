@@ -59,7 +59,7 @@ export function renderTask(task){
         taskItem.setAttribute('style','border-left: 4px solid orange');
         break;
       case 'low':
-        taskItem.setAttribute('style','border-left: 4px solid low');
+        taskItem.setAttribute('style','border-left: 4px solid green');
         break;
     };
     
@@ -80,45 +80,75 @@ export function newTaskInput(){
 
   const newTitle = Object.assign(document.createElement('input'), {
     type: 'text',
+    classList: 'newTaskTitle',
     id: 'newTitle',
     placeholder: 'Enter Task',
-    classList: 'newTaskTitle',
+    required: true,
   });
+
+  const body = Object.assign(document.createElement('div'),{
+    classList: 'newTaskBody'
+  })
 
   const newDetails = Object.assign(document.createElement('input'), {
     type: 'text',
+    classList: 'newDetails',
     id: 'newDetails',
-    placeholder: 'Enter additional details',
+    placeholder: '(Optional) Enter additional details',
   });
 
   const newTaskButtons = document.createElement('div');
   newTaskButtons.classList.add('newTaskButtons');
 
-  const priButton = Object.assign(document.createElement('button'),{
-    classList: 'priButton',
-    innerHTML: 'priority'
+  const dDate = Object.assign(document.createElement('input'), {
+    type: 'date',
+    classList: 'dueDateSet'
   });
 
+  //Priority Drop-down
+  const dropDown = Object.assign(document.createElement('div'),{
+    classList: 'dropDown',
+  });
+  const priButton = Object.assign(document.createElement('button'),{
+    classList: 'priButton',
+    innerHTML: 'Priority'
+  });
+  const dropContent = Object.assign(document.createElement('div'),{
+    classList: 'dropContent',
+  });
   const lowButton = Object.assign(document.createElement('button'),{
     innerHTML: 'Low',
   });
-  // priButton.appendChild(lowButton);
-  
+  const medButton = Object.assign(document.createElement('button'),{
+    innerHTML: 'Med',
+  });
+  const hiButton = Object.assign(document.createElement('button'),{
+    innerHTML: 'High',
+  });
+  dropContent.appendChild(lowButton);
+  dropContent.appendChild(medButton);
+  dropContent.appendChild(hiButton);
+  priButton.appendChild(dropContent);
+  dropDown.appendChild(priButton);
+
+  //Add Task Button
   const submit = Object.assign(document.createElement('input'),{
     type: 'submit',
     value: 'Add',
     classList: 'submit',
+    // innerHTML:'Add',
   });
   submit.addEventListener('click', (e)=>{
     processTask(e);
   });
 
-  newTaskButtons.appendChild(priButton);
+  newTaskButtons.appendChild(dropDown);
   newTaskButtons.appendChild(submit);
-  // newTaskButtons.appendChild(priButton);
 
   container.appendChild(newTitle);
-  container.appendChild(newDetails);
+  body.appendChild(newDetails);
+  body.appendChild(dDate);
+  container.appendChild(body);
   container.appendChild(newTaskButtons);
 
   return container;
@@ -126,11 +156,12 @@ export function newTaskInput(){
 
 function processTask(e) {
   let title = document.getElementById('newTitle').value;
-  let details = document.getElementById('newDetails').value;
-
-  const addTask = createTask(title, details, new Date(), 'low');
-  const taskList = document.getElementById('taskList');
-
-  taskList.appendChild(renderTask(addTask));
-  e.preventDefault();
+  if(title !==""){
+    console.log(title);
+    let details = document.getElementById('newDetails').value;
+    const addTask = createTask(title, details, new Date(), 'low');
+    const taskList = document.getElementById('taskList');
+    taskList.appendChild(renderTask(addTask));
+    e.preventDefault();
+  }
 }

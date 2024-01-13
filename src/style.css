@@ -4,37 +4,28 @@ html, body {
     color: rgb(16, 60, 24);
     height: 100%;
 }
-
 button {
     border: none;
     background-color: inherit;
-    display:flex;
-    align-items: center;
-    justify-content: center;
 }
-
 button:hover {
     border-bottom: 1px solid rgba(128, 128, 128, 0.2);
 }
-
 input {
     border: none;
     background-color: inherit;
     margin-bottom: 10px;
     font-family: inherit;
 }
-
 .page {
     display: flex;
     flex-direction: column;
     min-height: 100%;
 }
-
 .pageBody{
     flex: 1;
     display: flex;
 }
-
 .header {
     font-size: 50px;
     background-color: rgb(165, 211, 165);
@@ -42,7 +33,6 @@ input {
     width: calc(100%-30px);
     border-bottom: 1px ridge rgba(128, 128, 128, 0.5);
 }
-
 .projList {
     flex: 1;
     font-size: 30px;
@@ -50,7 +40,6 @@ input {
     padding: 30px;
     border-right: 1px ridge rgba(128, 128, 128, 0.5);
 }
-
 .pageRight {
     flex: 8;
     font-size: 30px;
@@ -59,7 +48,6 @@ input {
     display:flex;
     flex-direction: column;
 }
-
 .task{
     border: 2px outset rgba(212, 231, 213, 0.25);
     border-top-right-radius: 5px;
@@ -71,15 +59,12 @@ input {
     display: flex;
     align-items: center;
 }
-
 .task:hover{
     box-shadow: 8px 5px 5px rgba(128, 128, 128, 0.25);
 }
-
 .taskText{
     margin-right: auto;
 }
-
 .descButton{
     background-image: url('img/details.png');
     width: 18px;
@@ -87,7 +72,6 @@ input {
     background-size: contain;
     margin-right: 5px;
 }
-
 .modButton{
     background-image: url('img/edit.png');
     width: 20px;
@@ -95,7 +79,6 @@ input {
     background-size: contain;
     margin: 0px 5px;
 }
-
 .delButton{
     background-image: url('img/delete.png');
     width: 19px;
@@ -103,7 +86,6 @@ input {
     background-size: contain;
     margin-right: 5px;
 }
-
 .newTaskInput{
     border: 2px outset rgba(212, 231, 213, 0.25);
     border-top-right-radius: 5px;
@@ -115,24 +97,60 @@ input {
     display: flex;
     flex-direction: column;
 }
-
 .newTaskInput:hover{
     box-shadow: 8px 5px 5px rgba(128, 128, 128, 0.25);
 }
-
 .newTaskTitle {
     font-size: 20px;
 }
-
+.newTaskBody{
+    display: flex;
+    justify-content: flex-end;
+}
+.newDetails {
+    width: 50%;
+    margin-right: auto;
+}
+.dueDateSet {
+    width: 50%;
+    align-self: flex-end;
+}
 .newTaskButtons {
     display: flex;
+    justify-content: flex-end;
 }
-
+.dropDown{
+    display: inline-block;
+    position: absolute;
+    right: 16%;
+}
 .priButton {
+    font-family: 'Roboto-light', sans-serif;
     border: 1px solid grey;
-    width: auto;
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
+.dropContent{
+    display: none;
+}
+.dropDown:hover .dropContent{
+    display: block;
+}
+.dropDown button {
+    font-family: 'Roboto-light', sans-serif;
+    background-color: rgb(207, 234, 207);
+    width: 50px;
+    border: 1px solid grey;
+}
+.submit{
+    background-color: rgb(207, 234, 207);
+    border: 1px solid grey;
+    width: 40px;
+    height: 20px;
+    margin: 0px;
+}
 .footer {
     background-color: rgb(165, 211, 165);
     color: white;
@@ -141,7 +159,6 @@ input {
     text-align: center;
     border-top: 1px ridge rgba(128, 128, 128, 0.5);
 }
-
 .github {
     color: white;
     text-decoration: none;
