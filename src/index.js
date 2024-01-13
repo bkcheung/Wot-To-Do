@@ -1,6 +1,7 @@
 import _ from 'lodash';
+import { compareAsc, format } from "date-fns";
 import './style.css';
-import createTask from './tasks';
+import {createTask, renderTask, newTaskInput} from './tasks';
 
 function render() {
     const page = document.createElement('div');
@@ -18,13 +19,25 @@ function render() {
     projList.classList.add('projList');
     pageBody.appendChild(projList);
 
+    const pageRight = document.createElement('div');
+    pageRight.classList.add('pageRight');
+
     const taskList = document.createElement('div');
     taskList.classList.add('taskList');
+    taskList.setAttribute('id','taskList');
 
-    const task = createTask();
-    taskList.appendChild(task.render());
+    const task = createTask('Exercise','Leg day!!!',new Date(),'low');
+    taskList.appendChild(renderTask(task));
 
-    pageBody.appendChild(taskList);
+    const addTaskSection = document.createElement('div');
+    addTaskSection.classList.add('addTaskSection');
+
+    const newTask = newTaskInput();
+    addTaskSection.appendChild(newTask);
+
+    pageRight.appendChild(taskList);
+    pageRight.appendChild(addTaskSection);
+    pageBody.appendChild(pageRight);
     page.appendChild(pageBody);
 
     const footer = document.createElement('footer');
