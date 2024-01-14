@@ -6,12 +6,11 @@ function render() {
     const page = document.createElement('div');
     page.classList.add('page');
 
-    const header = document.createElement('div');  
+    const header = document.createElement('header');  
     header.innerHTML = "✓✓ Wot To Do";
-    header.classList.add('header');
     page.appendChild(header);
 
-    const pageBody = document.createElement('div');
+    const pageBody = document.createElement('main');
     pageBody.classList.add('pageBody');
     const projList = document.createElement('div');
     projList.innerHTML = "Today";
@@ -21,7 +20,7 @@ function render() {
     const pageRight = document.createElement('div');
     pageRight.classList.add('pageRight');
 
-    const taskList = document.createElement('div');
+    const taskList = document.createElement('ul');
     taskList.classList.add('taskList');
     taskList.setAttribute('id','taskList');
 

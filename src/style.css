@@ -4,6 +4,13 @@ html, body {
     color: rgb(16, 60, 24);
     height: 100%;
 }
+header {
+    font-size: 50px;
+    background-color: rgb(165, 211, 165);
+    padding: 30px;
+    width: calc(100%-30px);
+    border-bottom: 1px ridge rgba(128, 128, 128, 0.5);
+}
 button {
     border: none;
     background-color: inherit;
@@ -26,13 +33,7 @@ input {
     flex: 1;
     display: flex;
 }
-.header {
-    font-size: 50px;
-    background-color: rgb(165, 211, 165);
-    padding: 30px;
-    width: calc(100%-30px);
-    border-bottom: 1px ridge rgba(128, 128, 128, 0.5);
-}
+
 .projList {
     flex: 1;
     font-size: 30px;
@@ -47,6 +48,9 @@ input {
     padding: 30px;
     display:flex;
     flex-direction: column;
+}
+.taskList{
+    padding:0px;
 }
 .task{
     border: 2px outset rgba(212, 231, 213, 0.25);
@@ -120,36 +124,44 @@ input {
     justify-content: flex-end;
 }
 .dropDown{
-    display: inline-block;
+    /* display: inline-block; */
+    display: flex;
+    flex-direction: column;
     position: absolute;
     right: 16%;
 }
 .priButton {
     font-family: 'Roboto-light', sans-serif;
-    border: 1px solid grey;
+    background-color: rgb(207, 234, 207);
+    border-radius: 2px;
     width: 50px;
+    height: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 .dropContent{
     display: none;
 }
 .dropDown:hover .dropContent{
-    display: block;
+    display: flex;
+    flex-direction: column;
 }
-.dropDown button {
+.dropContent button {
     font-family: 'Roboto-light', sans-serif;
-    background-color: rgb(207, 234, 207);
+    background-color: rgb(245, 255, 245);
     width: 50px;
-    border: 1px solid grey;
 }
 .submit{
     background-color: rgb(207, 234, 207);
-    border: 1px solid grey;
+    border-radius: 2px;
     width: 40px;
     height: 20px;
     margin: 0px;
+}
+.submit:hover{
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
 }
 .footer {
     background-color: rgb(165, 211, 165);

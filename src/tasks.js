@@ -11,7 +11,7 @@ export function createTask(title, details, dueDate, priority){
 }
 
 export function renderTask(task){
-    const taskItem = document.createElement('div');
+    const taskItem = document.createElement('li');
     taskItem.classList.add('task');
 
     const checkBox = document.createElement('button');
@@ -50,6 +50,9 @@ export function renderTask(task){
 
     const delButton = document.createElement('button');
     delButton.classList.add('delButton');
+    delButton.addEventListener('click', (e)=>{
+      deleteTask(e);
+    })
 
     switch (task.priority){
       case 'high':
@@ -94,7 +97,7 @@ export function newTaskInput(){
     type: 'text',
     classList: 'newDetails',
     id: 'newDetails',
-    placeholder: '(Optional) Enter additional details',
+    placeholder: 'Details',
   });
 
   const newTaskButtons = document.createElement('div');
@@ -102,7 +105,8 @@ export function newTaskInput(){
 
   const dDate = Object.assign(document.createElement('input'), {
     type: 'date',
-    classList: 'dueDateSet'
+    classList: 'dueDateSet',
+    id: 'dueDate',
   });
 
   //Priority Drop-down
@@ -128,15 +132,17 @@ export function newTaskInput(){
   dropContent.appendChild(lowButton);
   dropContent.appendChild(medButton);
   dropContent.appendChild(hiButton);
-  priButton.appendChild(dropContent);
+
+  // priButton.appendChild(dropContent);
   dropDown.appendChild(priButton);
+  dropDown.appendChild(dropContent);
+
 
   //Add Task Button
   const submit = Object.assign(document.createElement('input'),{
     type: 'submit',
     value: 'Add',
     classList: 'submit',
-    // innerHTML:'Add',
   });
   submit.addEventListener('click', (e)=>{
     processTask(e);
@@ -159,9 +165,19 @@ function processTask(e) {
   if(title !==""){
     console.log(title);
     let details = document.getElementById('newDetails').value;
-    const addTask = createTask(title, details, new Date(), 'low');
+    let date = document.getElementById('dueDate').value;
+    if(date ===""){
+      date = new Date();
+    }
+    const addTask = createTask(title, details, date, 'low');
     const taskList = document.getElementById('taskList');
     taskList.appendChild(renderTask(addTask));
+    console.log(taskList);
     e.preventDefault();
   }
+}
+
+function deleteTask(e){
+  let selectedTask = e.target.closest('li');
+  selectedTask.remove();
 }
