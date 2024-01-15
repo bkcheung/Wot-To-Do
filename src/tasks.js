@@ -115,8 +115,10 @@ export function newTaskInput(){
   });
   const prioritySel = Object.assign(document.createElement('div'),{
     classList: 'prioritySel',
-    innerHTML: 'Priority'
+    innerHTML: 'Priority',
+    id: 'taskPriority',
   });
+  prioritySel.setAttribute('data-value','low');
   const dropContent = Object.assign(document.createElement('div'),{
     classList: 'dropContent',
   });
@@ -129,14 +131,23 @@ export function newTaskInput(){
   const hiButton = Object.assign(document.createElement('button'),{
     innerHTML: 'High',
   });
+  lowButton.addEventListener('click', (e)=>{
+    prioritySel.setAttribute('data-value','low');
+    e.preventDefault();
+  });
+  medButton.addEventListener('click', (e)=>{
+    prioritySel.setAttribute('data-value','medium');
+    e.preventDefault();
+  });
+  hiButton.addEventListener('click', (e)=>{
+    prioritySel.setAttribute('data-value','high');
+    e.preventDefault();
+  });
   dropContent.appendChild(lowButton);
   dropContent.appendChild(medButton);
   dropContent.appendChild(hiButton);
-
-  // priButton.appendChild(dropContent);
   dropDown.appendChild(prioritySel);
   dropDown.appendChild(dropContent);
-
 
   //Add Task Button
   const submit = Object.assign(document.createElement('input'),{
@@ -171,7 +182,10 @@ function processTask(e) {
     else{
       date = date.replace('-', '/'); //Prevent date offset
     }
-    const addTask = createTask(title, details, date, 'low');
+    let priority = document.getElementById('taskPriority')
+                   .getAttribute('data-value');
+
+    const addTask = createTask(title, details, date, priority);
     const taskList = document.getElementById('taskList');
     taskList.appendChild(renderTask(addTask));
     e.preventDefault();
