@@ -113,8 +113,8 @@ export function newTaskInput(){
   const dropDown = Object.assign(document.createElement('div'),{
     classList: 'dropDown',
   });
-  const priButton = Object.assign(document.createElement('button'),{
-    classList: 'priButton',
+  const prioritySel = Object.assign(document.createElement('div'),{
+    classList: 'prioritySel',
     innerHTML: 'Priority'
   });
   const dropContent = Object.assign(document.createElement('div'),{
@@ -134,7 +134,7 @@ export function newTaskInput(){
   dropContent.appendChild(hiButton);
 
   // priButton.appendChild(dropContent);
-  dropDown.appendChild(priButton);
+  dropDown.appendChild(prioritySel);
   dropDown.appendChild(dropContent);
 
 

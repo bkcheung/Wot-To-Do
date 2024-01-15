@@ -126,8 +126,10 @@ input {
     flex-direction: column;
     position: absolute;
 }
-.priButton {
+.prioritySel {
     font-family: 'Roboto-light', sans-serif;
+    font-size: small;
+    color: black;
     background-color: rgb(207, 234, 207);
     border-radius: 2px;
     width: 50px;
@@ -150,6 +152,7 @@ input {
     width: 50px;
 }
 .submit{
+    font-size: small;
     background-color: rgb(207, 234, 207);
     border-radius: 2px;
     width: 40px;
