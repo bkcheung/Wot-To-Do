@@ -163,16 +163,17 @@ export function newTaskInput(){
 function processTask(e) {
   let title = document.getElementById('newTitle').value;
   if(title !==""){
-    console.log(title);
     let details = document.getElementById('newDetails').value;
     let date = document.getElementById('dueDate').value;
-    if(date ===""){
+    if(date === ""){
       date = new Date();
+    }
+    else{
+      date = date.replace('-', '/'); //Prevent date offset
     }
     const addTask = createTask(title, details, date, 'low');
     const taskList = document.getElementById('taskList');
     taskList.appendChild(renderTask(addTask));
-    console.log(taskList);
     e.preventDefault();
   }
 }

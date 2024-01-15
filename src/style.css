@@ -112,23 +112,19 @@ input {
     justify-content: flex-end;
 }
 .newDetails {
-    width: 50%;
+    width: calc(100% - 100px);
     margin-right: auto;
 }
 .dueDateSet {
-    width: 50%;
-    align-self: flex-end;
+    width: 100px;
 }
 .newTaskButtons {
     display: flex;
-    justify-content: flex-end;
 }
 .dropDown{
-    /* display: inline-block; */
     display: flex;
     flex-direction: column;
     position: absolute;
-    right: 16%;
 }
 .priButton {
     font-family: 'Roboto-light', sans-serif;
@@ -159,6 +155,8 @@ input {
     width: 40px;
     height: 20px;
     margin: 0px;
+    position: relative;
+    left: 60px;
 }
 .submit:hover{
     border-bottom: 1px solid rgba(128, 128, 128, 0.2);
