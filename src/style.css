@@ -24,33 +24,40 @@ input {
     margin-bottom: 10px;
     font-family: inherit;
 }
-.page {
+body {
     display: flex;
     flex-direction: column;
     min-height: 100%;
 }
-.pageBody{
+#pageBody{
     flex: 1;
     display: flex;
 }
-
-.projList {
+#projList {
     flex: 1;
-    font-size: 30px;
+    display:flex;
+    flex-direction: column;
+    padding: 10px;
     background-color: rgb(197, 243, 197);
-    padding: 30px;
     border-right: 1px ridge rgba(128, 128, 128, 0.5);
 }
-.pageRight {
+.projTitle{
+    font-family: 'Roboto-Light', sans-serif;
+    font-size: medium;
+    padding: 10px;
+}
+#pageRight {
     flex: 8;
     font-size: 30px;
     background-color: rgb(234, 251, 234);
-    padding: 30px;
     display:flex;
     flex-direction: column;
 }
-.taskList{
-    padding:0px;
+#taskList{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 0px;
 }
 .task{
     border: 2px outset rgba(212, 231, 213, 0.25);
@@ -60,6 +67,7 @@ input {
     padding: 20px;
     margin-bottom: 10px;
     font-size: 20px;
+    flex: 1;
     display: flex;
     align-items: center;
 }
@@ -90,16 +98,21 @@ input {
     background-size: contain;
     margin-right: 5px;
 }
+.addTaskSection{
+    display: flex;
+}
 .newTaskInput{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.5);
     border: 2px outset rgba(212, 231, 213, 0.25);
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.5);
     padding: 20px;
+    margin: 0px 20px 0px 20px;
     font-size: 20px;
-
-    display: flex;
-    flex-direction: column;
+    
 }
 .newTaskInput:hover{
     box-shadow: 8px 5px 5px rgba(128, 128, 128, 0.25);
@@ -164,7 +177,7 @@ input {
 .submit:hover{
     border-bottom: 1px solid rgba(128, 128, 128, 0.2);
 }
-.footer {
+footer {
     background-color: rgb(165, 211, 165);
     color: white;
     padding: 10px;
@@ -172,7 +185,7 @@ input {
     text-align: center;
     border-top: 1px ridge rgba(128, 128, 128, 0.5);
 }
-.github {
+#github {
     color: white;
     text-decoration: none;
 }

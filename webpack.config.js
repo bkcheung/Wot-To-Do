@@ -5,9 +5,6 @@ module.exports = {
   mode: 'development',
   entry: {
     index: './src/index.js',
-    tasks: './src/tasks.js',
-    projects: './src/projects.js',
-    storage: './src/storage.js'
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -16,6 +13,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Wot To Do',
+      template: './src/index.html',
+      filename: './index.html',
     }),
   ],
   output: {
@@ -29,6 +28,10 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.html$/,
+        use: "raw-loader"
+     },     
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],

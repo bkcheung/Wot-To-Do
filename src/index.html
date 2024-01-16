@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Wot to Do</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <header>✓✓ Wot To Do</header>
+        <main id = "pageBody">
+            <div id = "projList"></div>
+            <div id = "pageRight">
+                <ul id = "taskList"></ul>
+                <div id = "addTaskSection">
+                    <form class="newTaskInput">
+                        <input type="text" class="newTaskTitle" id="newTitle" placeholder="Enter Task" required>
+                        <div class="newTaskBody">
+                            <input type="text" class="newDetails" id="newDetails" placeholder="Details">
+                            <input type="date" class="dueDateSet" id="dueDate">
+                        </div>
+                        <div class="newTaskButtons">
+                            <div class="dropDown">
+                                <div class="prioritySel" id="taskPriority" data-value="low">Priority</div>
+                                <div class="dropContent">
+                                    <button id = "lowButton">Low</button>
+                                    <button id = "medButton">Med</button>
+                                    <button id = "hiButton">High</button>
+                                </div>
+                            </div>
+                            <input type="submit" value="Add" class="submit" id = "addTaskButt">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <footer> Copyright © 
+            <script>
+                document.write(`${new Date().getFullYear()}&nbsp`)
+            </script>
+            <a id = "github" href "https://github.com/bkcheung">bkcheung</a>
+        </footer>
+        <script src="" async defer></script>
+    </body>
+</html>

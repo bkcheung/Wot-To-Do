@@ -1,4 +1,5 @@
 import { createProj } from "./projects";
+import { createTask } from "./tasks";
 
 export function storageAvailable(type) {
     let storage;

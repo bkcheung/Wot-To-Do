@@ -35,6 +35,7 @@ export function renderTask(task){
     descButton.classList.add('descButton');
     descButton.addEventListener('click', ()=>{
       console.log(task.details);
+      //Add function to view details
     });
 
     const dDate = document.createElement('div');
@@ -42,10 +43,9 @@ export function renderTask(task){
 
     const modButton = document.createElement('button');
     modButton.classList.add('modButton');
-    modButton.addEventListener('click', ()=>{
-      let newTitle = prompt("Enter a new title");
-      task.title = newTitle;
-      taskText.innerHTML = task.title;
+    modButton.addEventListener('click', (e)=>{
+      //add mod function
+      modifyTask(e);
     })
 
     const delButton = document.createElement('button');
@@ -73,66 +73,16 @@ export function renderTask(task){
     taskItem.appendChild(modButton);
     taskItem.appendChild(delButton);
 
-    // Storage.setItem('')
-
     return taskItem;
 }
 
-export function newTaskInput(){
-  const container = Object.assign(document.createElement('form'), {
-    classList: 'newTaskInput',
-  });
+export function newTaskButtonInit(){
+  const prioritySel = document.getElementById('taskPriority');
+  const lowButton = document.getElementById('lowButton');
+  const medButton = document.getElementById('medButton');
+  const hiButton = document.getElementById('hiButton');
+  const submit = document.getElementById('addTaskButt');
 
-  const newTitle = Object.assign(document.createElement('input'), {
-    type: 'text',
-    classList: 'newTaskTitle',
-    id: 'newTitle',
-    placeholder: 'Enter Task',
-    required: true,
-  });
-
-  const body = Object.assign(document.createElement('div'),{
-    classList: 'newTaskBody'
-  })
-
-  const newDetails = Object.assign(document.createElement('input'), {
-    type: 'text',
-    classList: 'newDetails',
-    id: 'newDetails',
-    placeholder: 'Details',
-  });
-
-  const newTaskButtons = document.createElement('div');
-  newTaskButtons.classList.add('newTaskButtons');
-
-  const dDate = Object.assign(document.createElement('input'), {
-    type: 'date',
-    classList: 'dueDateSet',
-    id: 'dueDate',
-  });
-
-  //Priority Drop-down
-  const dropDown = Object.assign(document.createElement('div'),{
-    classList: 'dropDown',
-  });
-  const prioritySel = Object.assign(document.createElement('div'),{
-    classList: 'prioritySel',
-    innerHTML: 'Priority',
-    id: 'taskPriority',
-  });
-  prioritySel.setAttribute('data-value','low');
-  const dropContent = Object.assign(document.createElement('div'),{
-    classList: 'dropContent',
-  });
-  const lowButton = Object.assign(document.createElement('button'),{
-    innerHTML: 'Low',
-  });
-  const medButton = Object.assign(document.createElement('button'),{
-    innerHTML: 'Med',
-  });
-  const hiButton = Object.assign(document.createElement('button'),{
-    innerHTML: 'High',
-  });
   lowButton.addEventListener('click', (e)=>{
     prioritySel.setAttribute('data-value','low');
     e.preventDefault();
@@ -145,32 +95,9 @@ export function newTaskInput(){
     prioritySel.setAttribute('data-value','high');
     e.preventDefault();
   });
-  dropContent.appendChild(lowButton);
-  dropContent.appendChild(medButton);
-  dropContent.appendChild(hiButton);
-  dropDown.appendChild(prioritySel);
-  dropDown.appendChild(dropContent);
-
-  //Add Task Button
-  const submit = Object.assign(document.createElement('input'),{
-    type: 'submit',
-    value: 'Add',
-    classList: 'submit',
-  });
   submit.addEventListener('click', (e)=>{
     processTask(e);
   });
-
-  newTaskButtons.appendChild(dropDown);
-  newTaskButtons.appendChild(submit);
-
-  container.appendChild(newTitle);
-  body.appendChild(newDetails);
-  body.appendChild(dDate);
-  container.appendChild(body);
-  container.appendChild(newTaskButtons);
-
-  return container;
 }
 
 function processTask(e) {
@@ -186,7 +113,6 @@ function processTask(e) {
     }
     let priority = document.getElementById('taskPriority')
                    .getAttribute('data-value');
-
     const addTask = createTask(title, details, date, priority);
     const taskList = document.getElementById('taskList');
     taskList.appendChild(renderTask(addTask));
@@ -197,6 +123,19 @@ function processTask(e) {
 function deleteTask(e){
   let selectedTask = e.target.closest('li');
   selectedTask.remove();
+}
+
+function modifyTask(e){
+  let selectedTask = e.target.closest('li');
+  let taskList = selectedTask.closest('ul');
+  let title = selectedTask.title;
+  let details = selectedTask.details;
+  let dueDate = selectedTask.dueDate;
+  let priority = selectedTask.priority;
+  let complete = selectedTask.complete;
+
+  console.log(selectedTask.closest('div'));
+  // selectedTask.remove();
 }
 
 

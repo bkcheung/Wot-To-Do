@@ -19,6 +19,7 @@ export function renderProj(projList){
     for(let i = 0; i < projList.length; i++){
         const projTitle = document.createElement('button');
         projTitle.innerHTML = projList[i].projName;
+        projTitle.classList.add('projTitle');
         projects.appendChild(projTitle);
     }
 }
