@@ -1,4 +1,4 @@
-import { compareAsc, format, sub } from "date-fns";
+import { format } from "date-fns";
 
 export function createTask(title, details, dueDate, priority){
     return {
@@ -72,6 +72,8 @@ export function renderTask(task){
     taskItem.appendChild(dDate);
     taskItem.appendChild(modButton);
     taskItem.appendChild(delButton);
+
+    // Storage.setItem('')
 
     return taskItem;
 }
@@ -196,3 +198,6 @@ function deleteTask(e){
   let selectedTask = e.target.closest('li');
   selectedTask.remove();
 }
+
+
+

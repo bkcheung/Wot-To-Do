@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import './style.css';
 import {createTask, renderTask, newTaskInput} from './tasks';
+import { listStorage, storageAvailable } from './storage';
+import { createProj, renderProj } from './projects';
 
 function render() {
     const page = document.createElement('div');
@@ -13,8 +15,8 @@ function render() {
     const pageBody = document.createElement('main');
     pageBody.classList.add('pageBody');
     const projList = document.createElement('div');
-    projList.innerHTML = "Today";
     projList.classList.add('projList');
+    projList.setAttribute('id','projList');
     pageBody.appendChild(projList);
 
     const pageRight = document.createElement('div');
@@ -53,4 +55,16 @@ function render() {
     return page;
   }
   
+  if(storageAvailable("localStorage")){
+    console.log("Local storage is available!");
+  }
+  const projList = listStorage();
+
+  let newProj = createProj('New Project');
+  projList.push(newProj);
+
   document.body.appendChild(render());
+
+  renderProj(projList);
+
+

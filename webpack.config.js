@@ -6,6 +6,8 @@ module.exports = {
   entry: {
     index: './src/index.js',
     tasks: './src/tasks.js',
+    projects: './src/projects.js',
+    storage: './src/storage.js'
   },
   devtool: 'inline-source-map',
   devServer: {
