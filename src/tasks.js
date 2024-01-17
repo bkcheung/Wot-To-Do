@@ -76,13 +76,16 @@ export function renderTask(task){
     return taskItem;
 }
 
-export function newTaskButtonInit(){
+export function newTasksInit(){
   const prioritySel = document.getElementById('taskPriority');
   const lowButton = document.getElementById('lowButton');
   const medButton = document.getElementById('medButton');
   const hiButton = document.getElementById('hiButton');
-  const submit = document.getElementById('addTaskButton');
+  const submit = document.getElementById('addTaskButton')
 
+  addTask.addEventListener('click', ()=>{
+    toggleHidden();
+  })
   lowButton.addEventListener('click', (e)=>{
     prioritySel.setAttribute('data-value','low');
     prioritySel.textContent = 'Low';
@@ -100,7 +103,15 @@ export function newTaskButtonInit(){
   });
   submit.addEventListener('click', (e)=>{
     processTask(e);
+    toggleHidden();
   });
+}
+
+function toggleHidden(){
+  const addTask = document.getElementById('addTask');
+  const addTaskForm = document.getElementById('newTaskInput')
+  addTask.classList.toggle('hidden');
+  addTaskForm.classList.toggle('hidden');
 }
 
 function processTask(e) {

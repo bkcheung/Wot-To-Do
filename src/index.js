@@ -1,8 +1,11 @@
 import _ from 'lodash';
 import './style.css';
-import {createTask, renderTask, newTaskButtonInit} from './tasks';
+import {createTask, renderTask, newTasksInit} from './tasks';
 import { listStorage, storageAvailable } from './storage';
 import { createProj, renderProj } from './projects';
+
+//Init
+newTasksInit();
 
 //Check for existing data from storage
 if(storageAvailable("localStorage")){
@@ -20,7 +23,7 @@ const task = createTask('Exercise','Leg day!!!',new Date(),'low');
 const taskList = document.getElementById('taskList');
 taskList.appendChild(renderTask(task));
 
-newTaskButtonInit(); //Move this to one initialization task
+ //Move this to one initialization task
 
 
 

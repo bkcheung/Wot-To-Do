@@ -15,7 +15,31 @@
             <div id = "projList"></div>
             <div id = "pageRight">
                 <ul id = "taskList"></ul>
-                <div id = "addTaskSection"></div>
+                <div id = "addTaskSection">
+                    <button id = "addTask">Add Task</button>
+                    <form class = "hidden" id="newTaskInput" >
+                        <input type="text" class="newTaskTitle" id="newTitle" 
+                               placeholder="Enter Task" required>
+                        <div class="newTaskBody">
+                            <input type="text" class="newDetails" id="newDetails" 
+                                   placeholder="Details">
+                            <input type="date" class="dueDateSet" id="dueDate">
+                        </div>
+                        <div class="newTaskButtons">
+                            <div class="dropDown">
+                                <div class="prioritySel" id="taskPriority" 
+                                     data-value="low">Priority</div>
+                                <div class="dropContent">
+                                    <button id = "lowButton">Low</button>
+                                    <button id = "medButton">Med</button>
+                                    <button id = "hiButton">High</button>
+                                </div>
+                            </div>
+                            <input type="submit" value="Add" class="submit" 
+                                   id = "addTaskButton">
+                        </div>
+                    </form>
+                </div>
             </div>
         </main>
         <footer> Copyright © 
@@ -24,7 +48,6 @@
             </script>
             <a id = "github" href "https://github.com/bkcheung">bkcheung</a>
         </footer>
-        
         <script src="" async defer></script>
     </body>
 </html>
