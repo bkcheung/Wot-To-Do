@@ -1,5 +1,10 @@
 import { format } from "date-fns";
 
+// export function createTask2(title, details, dueDate, priority){
+//   const project = document.getElementById
+//   toDo(title, details, dueDate, priority)
+// }
+
 export function createTask(title, details, dueDate, priority){
     return {
       title,
