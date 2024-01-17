@@ -1,4 +1,4 @@
-import { renderTask } from "./tasks";
+import { renderTask, clearTasks } from "./tasks";
 
 export function projStorage(){ //make new list or load existing
     let defaultProjList = [];
@@ -22,6 +22,9 @@ export function renderProjList(projList){
         const projTitle = document.createElement('button');
         projTitle.innerHTML = projList[i].projName;
         projTitle.classList.add('projTitle');
+        projTitle.addEventListener('click', ()=>{
+            renderProj(projList[i]);
+        })
         projects.appendChild(projTitle);
     }
 }
@@ -30,6 +33,7 @@ export function renderProj(project){
     const taskList = document.getElementById('taskList');
     const projTitle = document.getElementById('projTitle');
     projTitle.innerHTML = `${project.projName}:`;
+    clearTasks();
     const tasks = project.taskList;
     for(let i = 0; i < tasks.length; i++){
         taskList.appendChild(renderTask(tasks[i]));

@@ -136,6 +136,7 @@ function processTask(e) {
                               priority.getAttribute('data-value'));
     const taskList = document.getElementById('taskList');
     taskList.appendChild(renderTask(addTask));
+
     e.preventDefault();
 
     //Reset fields  
@@ -149,6 +150,15 @@ function processTask(e) {
 function deleteTask(e){
   let selectedTask = e.target.closest('li');
   selectedTask.remove();
+}
+
+export function clearTasks(){
+  // const taskList = document.getElementById('taskList');
+  let tasks = document.getElementsByTagName('li');
+  // console.log(tasks);
+  for (let i = 0; i < tasks.length; i++){
+    tasks[i].remove();
+  }
 }
 
 function modifyTask(e){

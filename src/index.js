@@ -14,7 +14,7 @@ if(storageAvailable("localStorage")){
 const projList = listStorage();
 
 //For dev only: Adding project
-// projList.push(createProj('Test'));
+projList.push(createProj('New Proj'));
 renderProjList(projList);
 renderProj(projList[0]);
 
