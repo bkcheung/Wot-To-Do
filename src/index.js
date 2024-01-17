@@ -2,7 +2,7 @@ import _ from 'lodash';
 import './style.css';
 import {createTask, renderTask, newTasksInit} from './tasks';
 import { listStorage, storageAvailable } from './storage';
-import { createProj, renderProj } from './projects';
+import { createProj, renderProj, renderProjList } from './projects';
 
 //Init
 newTasksInit();
@@ -14,16 +14,10 @@ if(storageAvailable("localStorage")){
 const projList = listStorage();
 
 //For dev only: Adding project
-let newProj = createProj('Test');
-projList.push(newProj);
-renderProj(projList);
+// projList.push(createProj('Test'));
+renderProjList(projList);
+renderProj(projList[0]);
 
-//For dev only: Adding new task
-const task = createTask('Exercise','Leg day!!!',new Date(),'low');
-const taskList = document.getElementById('taskList');
-taskList.appendChild(renderTask(task));
-
- //Move this to one initialization task
 
 
 

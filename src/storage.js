@@ -17,8 +17,15 @@ export function storageAvailable(type) {
   }
 
   export function listStorage(){
-    let defaultProjList = [createProj('Today')];
+    const defaultProjList = [defaultProj()];
     let projList = localStorage.getItem('projList');
     projList =  JSON.parse(projList || JSON.stringify(defaultProjList));
     return projList;
+  }
+
+  function defaultProj(){
+    const defaultProj = createProj('Today');
+    const defaultTask = createTask('Exercise','Leg day!!!',new Date(),'low');
+    defaultProj.taskList.push(defaultTask);
+    return defaultProj;
   }
