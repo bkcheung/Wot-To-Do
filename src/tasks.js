@@ -81,22 +81,26 @@ export function newTaskButtonInit(){
   const lowButton = document.getElementById('lowButton');
   const medButton = document.getElementById('medButton');
   const hiButton = document.getElementById('hiButton');
-  const submit = document.getElementById('addTaskButt');
+  const submit = document.getElementById('addTaskButton');
 
   lowButton.addEventListener('click', (e)=>{
     prioritySel.setAttribute('data-value','low');
+    prioritySel.textContent = 'Low';
     e.preventDefault();
   });
   medButton.addEventListener('click', (e)=>{
     prioritySel.setAttribute('data-value','medium');
+    prioritySel.textContent = 'Medium';
     e.preventDefault();
   });
   hiButton.addEventListener('click', (e)=>{
     prioritySel.setAttribute('data-value','high');
+    prioritySel.textContent = 'High';
     e.preventDefault();
   });
   submit.addEventListener('click', (e)=>{
     processTask(e);
+    prioritySel.textContent = 'Priority';
   });
 }
 
@@ -136,6 +140,10 @@ function modifyTask(e){
 
   console.log(selectedTask.closest('div'));
   // selectedTask.remove();
+}
+
+function viewDetails(e){
+  //Function to view details of task
 }
 
 
