@@ -100,27 +100,33 @@ export function newTaskButtonInit(){
   });
   submit.addEventListener('click', (e)=>{
     processTask(e);
-    prioritySel.textContent = 'Priority';
   });
 }
 
 function processTask(e) {
-  let title = document.getElementById('newTitle').value;
+  let title = document.getElementById('newTitle');
   if(title !==""){
-    let details = document.getElementById('newDetails').value;
-    let date = document.getElementById('dueDate').value;
-    if(date === ""){
-      date = new Date();
+    let details = document.getElementById('newDetails');
+    let date = document.getElementById('dueDate');
+    let dateV = date.value;
+    if(dateV === ""){
+      dateV = new Date();
     }
     else{
-      date = date.replace('-', '/'); //Prevent date offset
+      dateV = dateV.replace('-', '/'); //Prevent date offset
     }
-    let priority = document.getElementById('taskPriority')
-                   .getAttribute('data-value');
-    const addTask = createTask(title, details, date, priority);
+    let priority = document.getElementById('taskPriority');
+    const addTask = createTask(title.value, details.value, dateV, 
+                              priority.getAttribute('data-value'));
     const taskList = document.getElementById('taskList');
     taskList.appendChild(renderTask(addTask));
     e.preventDefault();
+
+    //Reset fields  
+    title.value = "";
+    details.value = "";
+    date.value = null;
+    priority.textContent = "Priority";
   }
 }
 
