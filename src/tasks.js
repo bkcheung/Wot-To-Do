@@ -1,17 +1,20 @@
 import { format } from "date-fns";
+import { renderProjTasks } from "./projects";
 
 export function createTask(title, details, dueDate, priority){
     return {
       title,
+      details,
       dueDate: format(dueDate, "MM/dd/yyyy"),
       priority,
-      details,
+      key: 0,
       complete: false,
     }
 }
 export function renderTask(task){
     const taskItem = document.createElement('li');
     taskItem.classList.add('task');
+    taskItem.setAttribute('key', task.key);
 
     const checkBox = document.createElement('button');
     checkBox.innerHTML = '☑️';
@@ -76,7 +79,7 @@ export function renderTask(task){
 }
 export function clearTasks(){
   let tasks = document.getElementsByTagName('li');
-  for (let i = 0; i < tasks.length; i++){
+  for (let i = tasks.length-1; i > -1; i--){
     tasks[i].remove();
   }
 }
@@ -95,10 +98,7 @@ export function processTask(e) {
     let priority = document.getElementById('taskPriority');
     const addTask = createTask(title.value, details.value, dateV, 
                               priority.getAttribute('data-value'));
-    const currProjTitle = document.getElementById('projTitle').textContent;
-    console.log(currProjTitle);
-    let projList = JSON.parse(localStorage.getItem('projList'));
-    console.log(projList);
+    storeTask(addTask);
     e.preventDefault();
 
     //Reset fields  
@@ -109,7 +109,17 @@ export function processTask(e) {
   }
 }
 function deleteTask(e){
+  const index = document.getElementById('projTitle').getAttribute('index');
+  let projList = JSON.parse(localStorage.getItem('projList'));
   let selectedTask = e.target.closest('li');
+  let taskKey = Number(selectedTask.getAttribute('key'));
+  let taskList = projList[index].taskList;
+  for (let i = taskList.length-1; i > -1; i--){
+    if(taskList[i].key === taskKey){
+      projList[index].taskList.splice(i,1);
+      localStorage.setItem('projList',JSON.stringify(projList));
+    }
+  }
   selectedTask.remove();
 }
 function modifyTask(e){
@@ -128,5 +138,13 @@ function viewDetails(e){
   //Function to view details of task
 }
 
-
-
+function storeTask(task){
+  const index = document.getElementById('projTitle').getAttribute('index');
+  let projList = JSON.parse(localStorage.getItem('projList'));
+  let taskList = projList[index].taskList;
+  task.key = taskList.length;
+  taskList.push(task);
+  console.log(taskList);
+  localStorage.setItem('projList',JSON.stringify(projList));
+  renderProjTasks(projList[index]);
+}

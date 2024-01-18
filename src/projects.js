@@ -1,13 +1,6 @@
 import { renderTask, clearTasks } from "./tasks";
 
-function storeProject(project){
-    let projList = JSON.parse(localStorage.getItem('projList'));
-    projList.push(project);
-    localStorage.setItem('projList', JSON.stringify(projList));
-    localStorage.setItem('numProj', projList.length);
-    console.log(JSON.parse(localStorage.getItem('projList')));
-    console.log(localStorage.getItem('numProj'));
-}
+
 export function createProj(projName, projNum){
     let taskList = [];
     return{
@@ -48,6 +41,7 @@ export function renderProjTasks(project){
     const taskList = document.getElementById('taskList');
     const projTitle = document.getElementById('projTitle');
     projTitle.innerHTML = project.projName;
+    projTitle.setAttribute('index', project.projNum);
     clearTasks();
     const tasks = project.taskList;
     for(let i = 0; i < tasks.length; i++){
@@ -60,6 +54,15 @@ export function processProject(e){
     let numProj = Number(localStorage.getItem('numProj'));
     storeProject(createProj(title.value, numProj));
     title.value = "";
+}
+
+function storeProject(project){
+    let projList = JSON.parse(localStorage.getItem('projList'));
+    projList.push(project);
+    localStorage.setItem('projList', JSON.stringify(projList));
+    localStorage.setItem('numProj', projList.length);
+    console.log(JSON.parse(localStorage.getItem('projList')));
+    console.log(localStorage.getItem('numProj'));
 }
 
 function deleteProj(e){

@@ -1,5 +1,5 @@
 import { processTask } from "./tasks";
-import { processProject, renderProjList } from "./projects";
+import { processProject, renderProjList, renderProjTasks } from "./projects";
 
 export function pageInit(){
     const prioritySel = document.getElementById('taskPriority');

@@ -10,10 +10,6 @@ if(storageAvailable("localStorage")){
 }
 const projList = listStorage();
 
-//For dev only: Adding project
-// let projNum = Number(localStorage.getItem('numProj'));
-// projList.push(createProj('New Proj',projNum));
-
 //Init
 pageInit();
 renderProjList(projList);
