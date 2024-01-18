@@ -33,7 +33,7 @@ body {
     flex: 1;
     display: flex;
 }
-#projList {
+#pageLeft{
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -43,6 +43,14 @@ body {
     background-color: rgb(197, 243, 197);
     border-right: 1px ridge rgba(128, 128, 128, 0.5);
 }
+#projTitle{
+    margin-bottom: 10px;
+}
+#projList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 #projListTitle{
     margin-bottom: 10px;
 }
@@ -50,6 +58,32 @@ body {
     font-family: 'Roboto-Light', sans-serif;
     font-size: medium;
     padding: 10px;
+}
+#addProj{
+    font-family: 'Roboto-Light', sans-serif;
+    font-size: medium;
+    color: grey;
+    padding: 10px;
+}
+#addProj.hidden{
+    display:none;
+}
+#projForm{
+    display: flex;
+}
+#projForm.hidden{
+    display:none;
+}
+#subProj{
+    margin:0px
+}
+#newProj{
+    background-color: rgba(255, 255, 255, 0.35);
+    border-radius: 2px;
+    font-size: 15px;
+    width: 80%;
+    padding: 5px 0px;
+    margin:10px 0px;
 }
 #pageRight {
     flex: 8;
@@ -65,9 +99,6 @@ body {
     margin: 0px;
     font-size: 20px;
 }
-#projTitle{
-    margin-bottom: 10px;
-}
 .task{
     border: 2px outset rgba(212, 231, 213, 0.25);
     border-top-right-radius: 5px;
@@ -75,7 +106,7 @@ body {
     background-color:rgb(249, 252, 249);
     padding: 20px;
     margin-bottom: 10px;
-    font-size: 20px;
+    font-size: medium;
     flex: 1;
     display: flex;
     align-items: center;
@@ -113,6 +144,7 @@ body {
 #addTask{
     font-family: 'Roboto-light',sans-serif;
     font-size: 15px;
+    color: grey;
     background-color: rgba(255, 255, 255, 0.5);
     margin: 0px 20px;
     padding: 10px;

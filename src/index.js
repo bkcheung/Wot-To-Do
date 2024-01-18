@@ -1,11 +1,8 @@
 import _ from 'lodash';
 import './style.css';
-import {createTask, renderTask, newTasksInit} from './tasks';
+import { pageInit } from './init';
 import { listStorage, storageAvailable } from './storage';
-import { createProj, renderProj, renderProjList } from './projects';
-
-//Init
-newTasksInit();
+import { createProj, renderProjTasks, renderProjList } from './projects';
 
 //Check for existing data from storage
 if(storageAvailable("localStorage")){
@@ -14,9 +11,13 @@ if(storageAvailable("localStorage")){
 const projList = listStorage();
 
 //For dev only: Adding project
-projList.push(createProj('New Proj'));
+// let projNum = Number(localStorage.getItem('numProj'));
+// projList.push(createProj('New Proj',projNum));
+
+//Init
+pageInit();
 renderProjList(projList);
-renderProj(projList[0]);
+renderProjTasks(projList[0]);
 
 
 

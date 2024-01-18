@@ -1,10 +1,5 @@
 import { format } from "date-fns";
 
-// export function createTask2(title, details, dueDate, priority){
-//   const project = document.getElementById
-//   toDo(title, details, dueDate, priority)
-// }
-
 export function createTask(title, details, dueDate, priority){
     return {
       title,
@@ -14,7 +9,6 @@ export function createTask(title, details, dueDate, priority){
       complete: false,
     }
 }
-
 export function renderTask(task){
     const taskItem = document.createElement('li');
     taskItem.classList.add('task');
@@ -80,46 +74,13 @@ export function renderTask(task){
 
     return taskItem;
 }
-
-export function newTasksInit(){
-  const prioritySel = document.getElementById('taskPriority');
-  const lowButton = document.getElementById('lowButton');
-  const medButton = document.getElementById('medButton');
-  const hiButton = document.getElementById('hiButton');
-  const submit = document.getElementById('addTaskButton')
-
-  addTask.addEventListener('click', ()=>{
-    toggleHidden();
-  })
-  lowButton.addEventListener('click', (e)=>{
-    prioritySel.setAttribute('data-value','low');
-    prioritySel.textContent = 'Low';
-    e.preventDefault();
-  });
-  medButton.addEventListener('click', (e)=>{
-    prioritySel.setAttribute('data-value','medium');
-    prioritySel.textContent = 'Medium';
-    e.preventDefault();
-  });
-  hiButton.addEventListener('click', (e)=>{
-    prioritySel.setAttribute('data-value','high');
-    prioritySel.textContent = 'High';
-    e.preventDefault();
-  });
-  submit.addEventListener('click', (e)=>{
-    processTask(e);
-    toggleHidden();
-  });
+export function clearTasks(){
+  let tasks = document.getElementsByTagName('li');
+  for (let i = 0; i < tasks.length; i++){
+    tasks[i].remove();
+  }
 }
-
-function toggleHidden(){
-  const addTask = document.getElementById('addTask');
-  const addTaskForm = document.getElementById('newTaskInput')
-  addTask.classList.toggle('hidden');
-  addTaskForm.classList.toggle('hidden');
-}
-
-function processTask(e) {
+export function processTask(e) {
   let title = document.getElementById('newTitle');
   if(title !==""){
     let details = document.getElementById('newDetails');
@@ -134,9 +95,10 @@ function processTask(e) {
     let priority = document.getElementById('taskPriority');
     const addTask = createTask(title.value, details.value, dateV, 
                               priority.getAttribute('data-value'));
-    const taskList = document.getElementById('taskList');
-    taskList.appendChild(renderTask(addTask));
-
+    const currProjTitle = document.getElementById('projTitle').textContent;
+    console.log(currProjTitle);
+    let projList = JSON.parse(localStorage.getItem('projList'));
+    console.log(projList);
     e.preventDefault();
 
     //Reset fields  
@@ -146,21 +108,10 @@ function processTask(e) {
     priority.textContent = "Priority";
   }
 }
-
 function deleteTask(e){
   let selectedTask = e.target.closest('li');
   selectedTask.remove();
 }
-
-export function clearTasks(){
-  // const taskList = document.getElementById('taskList');
-  let tasks = document.getElementsByTagName('li');
-  // console.log(tasks);
-  for (let i = 0; i < tasks.length; i++){
-    tasks[i].remove();
-  }
-}
-
 function modifyTask(e){
   let selectedTask = e.target.closest('li');
   let taskList = selectedTask.closest('ul');
@@ -173,7 +124,6 @@ function modifyTask(e){
   console.log(selectedTask.closest('div'));
   // selectedTask.remove();
 }
-
 function viewDetails(e){
   //Function to view details of task
 }
