@@ -1,5 +1,5 @@
 import { processTask } from "./tasks";
-import { processProject } from "./projects";
+import { processProject, renderProjList } from "./projects";
 
 export function pageInit(){
     const prioritySel = document.getElementById('taskPriority');
@@ -16,6 +16,7 @@ export function pageInit(){
     addProjSubmit.addEventListener('click', (e)=>{
         processProject(e);
         toggleProjAdd();
+        renderProjList();
     })
     addTask.addEventListener('click', ()=>{
         toggleTaskAdd();
