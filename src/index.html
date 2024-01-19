@@ -25,9 +25,11 @@
             <div id = "pageRight">
                 <ul id = "taskList">
                     <div id = "dispProj"></div>
+                    <form id = "modifyTask"></form>
                 </ul>
                 <div id = "addTaskSection">
                     <button id = "addTask">Add Task</button>
+                    <!-- Hidden Add Task Form -->
                     <form class = "hidden" id="newTaskInput" >
                         <input type="text" class="newTaskTitle" id="newTitle" 
                                placeholder="Enter Task" required>
@@ -53,11 +55,11 @@
                 </div>
             </div>
         </main>
-        <footer> Copyright © 
+        <footer> Copyright &copy 
             <script>
                 document.write(`${new Date().getFullYear()}&nbsp`)
             </script>
-            <a id = "github" href "https://github.com/bkcheung">bkcheung</a>
+            <a id = "github" href="https://github.com/bkcheung">bkcheung</a>
         </footer>
         <script src="" async defer></script>
     </body>

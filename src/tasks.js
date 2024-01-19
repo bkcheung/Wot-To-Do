@@ -130,20 +130,13 @@ function deleteTask(e){
   let selectedTask = e.target.closest('li');
   let taskKey = Number(selectedTask.getAttribute('key'));
   let taskList = projList[index].taskList;
-
-  // console.log(taskKey);
-
   for (let i = taskList.length-1; i > -1; i--){
-    console.log(taskList[i].key);
-
     if(Number(taskList[i].key) === taskKey){
-
       projList[index].taskList.splice(i,1);
       localStorage.setItem('projList',JSON.stringify(projList));
     }
   }
-  // renderProjTasks(projList[index]);
-  selectedTask.remove();
+  renderProjTasks([index]);
 }
 function modifyTask(e){
   let selectedTask = e.target.closest('li');

@@ -1,5 +1,4 @@
-import { renderTask, renderProjTasks, clearTasks } from "./tasks";
-
+import { renderProjTasks } from "./tasks";
 
 export function createProj(projName, projKey){
     return{
@@ -23,7 +22,32 @@ export function renderProjList(){
             renderProjTasks(i);
         })
         project.appendChild(projTitle);
+
         if(i>0){
+            //Hidden mod form
+            const modForm = Object.assign(document.createElement('input'),{
+                type: 'text',
+                classList: 'modForm hidden',
+            });
+            project.appendChild(modForm);
+            //Submit mod form
+            const modFormButton = Object.assign(document.createElement('button'),{
+                classList: 'modFormButton hidden',
+                innerHTML: '↳',
+            });
+            modFormButton.addEventListener('click',(e)=>{
+                saveProjName(e);
+            })
+            project.appendChild(modFormButton);
+            //Mod button
+            const modButton = document.createElement('button');
+            modButton.classList.add('projMod');
+            modButton.innerHTML = '✎';
+            modButton.addEventListener('click',(e)=>{
+                modProjName(e);
+            })
+            project.appendChild(modButton);
+            //Del button
             const delProj = document.createElement('button');
             delProj.innerHTML = 'x';
             delProj.classList.add('delProj');
@@ -38,22 +62,6 @@ export function renderProjList(){
     }
     localStorage.setItem('projList', JSON.stringify(projList));
 }
-// export function renderProjTasks(project){
-//     // const projList = localStorage.getItem('projList');
-//     const taskList = document.getElementById('taskList');
-//     const projTitle = document.getElementById('dispProj');
-//     projTitle.innerHTML = project.projName;
-//     projTitle.setAttribute('projKey', project.projKey);
-//     clearTasks();
-//     const tasks = project.taskList;
-//     for(let i = 0; i < tasks.length; i++){
-//         tasks[i].key = i;
-//         taskList.appendChild(renderTask(tasks[i]));
-//     }
-//     // localStorage.setItem('projList', JSON.)
-//     console.log(tasks);
-//     return 
-// }
 export function processProject(e){
     e.preventDefault();
     const title = document.getElementById('newProj');
@@ -90,4 +98,39 @@ function clearProjects(){
     for(let i = listProj.length-1; i > -1; i--){
         listProj[i].remove();
     }
+}
+
+function modProjName(e){
+    // first add a mod button, then comibne with delete button
+    toggleProjMod(e);
+
+}
+
+function saveProjName(e){
+    const newName = e.target.closest('div').querySelector('.modForm').value;
+    if(newName !==""){ //Change name if new name populated, else, no change
+        console.log(newName);
+        const key = e.target.closest('div').querySelector('.delProj')
+                     .getAttribute('key');
+        const projList = JSON.parse(localStorage.getItem('projList'));
+        projList[key].projName = newName;
+        localStorage.setItem('projList', JSON.stringify(projList));
+        renderProjList();
+    }
+    toggleProjMod(e);
+
+}
+
+function toggleProjMod(e){
+    const projDiv = e.target.closest('div')
+    const proj = projDiv.querySelector('.projTitle');
+    const form = projDiv.querySelector('.modForm');
+    const modFormButton =projDiv.querySelector('.modFormButton');
+    const modButton = projDiv.querySelector('.projMod');
+    const delButton = projDiv.querySelector('.delProj');
+    proj.classList.toggle('hidden');
+    form.classList.toggle('hidden');
+    modFormButton.classList.toggle('hidden');
+    modButton.classList.toggle('hidden');
+    delButton.classList.toggle('hidden');
 }

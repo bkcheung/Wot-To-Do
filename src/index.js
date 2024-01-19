@@ -13,8 +13,7 @@ const projList = listStorage();
 
 //Init
 pageInit();
-renderProjList(projList);
-renderProjTasks(0);
+
 
 
 

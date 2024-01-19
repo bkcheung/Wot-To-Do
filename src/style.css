@@ -61,11 +61,39 @@ body {
     padding: 10px;
     flex: 1
 }
+.projTitle.hidden{
+    display:none;
+}
 #dispProj{
     margin-bottom: 10px;
 }
 .delProj{
     color: grey;
+}
+.modForm{
+    background-color: rgba(255, 255, 255, 0.3);
+    font-family: 'Roboto-Light', sans-serif;
+    font-size: medium;
+    padding: 10px;
+    width: 100%;
+}
+.modForm.hidden{
+    display: none;
+}
+.modFormButton{
+    color: grey;
+}
+.modFormButton.hidden {
+    display: none;
+}
+.projMod{
+    color: grey;
+}
+.projMod.hidden{
+    display: none;
+}
+.delProj.hidden{
+    display:none;
 }
 #addProj{
     font-family: 'Roboto-Light', sans-serif;
@@ -182,7 +210,7 @@ body {
     box-shadow: 8px 5px 5px rgba(128, 128, 128, 0.25);
 }
 .newTaskTitle {
-    font-size: 20px;
+    font-size: 15px;
 }
 .newTaskBody{
     display: flex;

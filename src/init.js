@@ -1,7 +1,9 @@
-import { processTask } from "./tasks";
+import { processTask, renderProjTasks } from "./tasks";
 import { processProject, renderProjList } from "./projects";
 
 export function pageInit(){
+    renderProjList(projList);
+    renderProjTasks(0);
     const prioritySel = document.getElementById('taskPriority');
     const lowButton = document.getElementById('lowButton');
     const medButton = document.getElementById('medButton');
