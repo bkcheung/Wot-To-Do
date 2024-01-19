@@ -1,21 +1,18 @@
 import { renderTask, clearTasks } from "./tasks";
 
 
-export function createProj(projName, projNum){
-    let taskList = [];
+export function createProj(projName, projKey){
     return{
         projName,
-        taskList,
-        projNum,
+        projKey,
+        taskList: [],
     }
 }
 export function renderProjList(){
     const projects = document.getElementById('projList');
     let projList = JSON.parse(localStorage.getItem('projList'));
-    let listProj = projects.getElementsByClassName('project');
-    for(let i = listProj.length-1; i > -1; i--){
-        listProj[i].remove();
-    }
+    clearProjects();
+    //Render tasks
     for(let i = 0; i < projList.length; i++){
         const project = document.createElement('div');
         project.classList.add('project');
@@ -23,25 +20,27 @@ export function renderProjList(){
         projTitle.innerHTML = projList[i].projName;
         projTitle.classList.add('projTitle');
         projTitle.addEventListener('click', ()=>{
-            renderProj(projList[i]);
+            renderProjTasks(projList[i]);
         })
         const delProj = document.createElement('button');
         delProj.innerHTML = 'x';
         delProj.classList.add('delProj');
-        delProj.setAttribute('index', i);
         delProj.addEventListener('click',(e)=>{
             deleteProj(e);
         })
+        delProj.setAttribute('key', i);
+        projList[i].projKey = i;
         project.appendChild(projTitle);
         project.appendChild(delProj);
         projects.appendChild(project);
     }
+    localStorage.setItem('projList', JSON.stringify(projList));
 }
 export function renderProjTasks(project){
     const taskList = document.getElementById('taskList');
-    const projTitle = document.getElementById('projTitle');
+    const projTitle = document.getElementById('dispProj');
     projTitle.innerHTML = project.projName;
-    projTitle.setAttribute('index', project.projNum);
+    projTitle.setAttribute('projKey', project.projKey);
     clearTasks();
     const tasks = project.taskList;
     for(let i = 0; i < tasks.length; i++){
@@ -55,7 +54,6 @@ export function processProject(e){
     storeProject(createProj(title.value, numProj));
     title.value = "";
 }
-
 function storeProject(project){
     let projList = JSON.parse(localStorage.getItem('projList'));
     projList.push(project);
@@ -66,10 +64,23 @@ function storeProject(project){
 }
 
 function deleteProj(e){
-    let projIndex = (e.target).getAttribute('index');
+    let projKey = Number((e.target).getAttribute('key'));
     let projList = JSON.parse(localStorage.getItem('projList'));
-    projList.splice(projIndex,1);
-    localStorage.setItem('projList', JSON.stringify(projList));
-    let selProj = e.target.closest('div');
-    selProj.remove();
+
+    for(let i = projList.length-1; i > -1; i--){
+        if(projList[i].projKey === projKey){
+            console.log(i);
+            projList.splice(i,1);
+            localStorage.setItem('projList', JSON.stringify(projList));
+        }
+    }
+    renderProjList();
+}
+
+function clearProjects(){
+    const projects = document.getElementById('projList');
+    const listProj = projects.getElementsByClassName('project');
+    for(let i = listProj.length-1; i > -1; i--){
+        listProj[i].remove();
+    }
 }
