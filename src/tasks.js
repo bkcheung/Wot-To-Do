@@ -121,6 +121,7 @@ export function processTask(e) {
     details.value = "";
     date.value = null;
     priority.textContent = "Priority";
+    priority.setAttribute('data-value','low');
   }
 }
 function deleteTask(e){
@@ -166,5 +167,5 @@ function storeTask(task){
   let taskList = projList[index].taskList;
   taskList.push(task);
   localStorage.setItem('projList',JSON.stringify(projList));
-  renderProjTasks(projList[index]);
+  renderProjTasks(index);
 }

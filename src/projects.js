@@ -22,16 +22,18 @@ export function renderProjList(){
         projTitle.addEventListener('click', ()=>{
             renderProjTasks(i);
         })
-        const delProj = document.createElement('button');
-        delProj.innerHTML = 'x';
-        delProj.classList.add('delProj');
-        delProj.addEventListener('click',(e)=>{
-            deleteProj(e);
-        })
-        delProj.setAttribute('key', i);
-        projList[i].projKey = i;
         project.appendChild(projTitle);
-        project.appendChild(delProj);
+        if(i>0){
+            const delProj = document.createElement('button');
+            delProj.innerHTML = 'x';
+            delProj.classList.add('delProj');
+            delProj.addEventListener('click',(e)=>{
+                deleteProj(e);
+            })
+            delProj.setAttribute('key', i);
+            projList[i].projKey = i;
+            project.appendChild(delProj);
+        }
         projects.appendChild(project);
     }
     localStorage.setItem('projList', JSON.stringify(projList));
