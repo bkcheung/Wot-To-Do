@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import { renderProjTasks } from "./projects";
 
 export function createTask(title, details, dueDate, priority){
     return {
@@ -77,6 +76,22 @@ export function renderTask(task){
 
     return taskItem;
 }
+export function renderProjTasks(projIndex){
+  const projList = JSON.parse(localStorage.getItem('projList'));
+  let project = projList[projIndex];
+  const taskList = document.getElementById('taskList');
+  const projTitle = document.getElementById('dispProj');
+  projTitle.innerHTML = project.projName;
+  projTitle.setAttribute('projKey', project.projKey);
+  clearTasks();
+  const tasks = project.taskList;
+  for(let i = 0; i < tasks.length; i++){
+      tasks[i].key = i;
+      taskList.appendChild(renderTask(tasks[i]));
+  }
+  localStorage.setItem('projList', JSON.stringify(projList));
+  return 
+}
 export function clearTasks(){
   let tasks = document.getElementsByTagName('li');
   for (let i = tasks.length-1; i > -1; i--){
@@ -109,17 +124,24 @@ export function processTask(e) {
   }
 }
 function deleteTask(e){
-  const index = document.getElementById('projTitle').getAttribute('index');
+  const index = document.getElementById('dispProj').getAttribute('projKey');
   let projList = JSON.parse(localStorage.getItem('projList'));
   let selectedTask = e.target.closest('li');
   let taskKey = Number(selectedTask.getAttribute('key'));
   let taskList = projList[index].taskList;
+
+  // console.log(taskKey);
+
   for (let i = taskList.length-1; i > -1; i--){
-    if(taskList[i].key === taskKey){
+    console.log(taskList[i].key);
+
+    if(Number(taskList[i].key) === taskKey){
+
       projList[index].taskList.splice(i,1);
       localStorage.setItem('projList',JSON.stringify(projList));
     }
   }
+  // renderProjTasks(projList[index]);
   selectedTask.remove();
 }
 function modifyTask(e){
@@ -139,12 +161,10 @@ function viewDetails(e){
 }
 
 function storeTask(task){
-  const index = document.getElementById('projTitle').getAttribute('index');
+  const index = document.getElementById('dispProj').getAttribute('projKey');
   let projList = JSON.parse(localStorage.getItem('projList'));
   let taskList = projList[index].taskList;
-  task.key = taskList.length;
   taskList.push(task);
-  console.log(taskList);
   localStorage.setItem('projList',JSON.stringify(projList));
   renderProjTasks(projList[index]);
 }

@@ -1,4 +1,4 @@
-import { renderTask, clearTasks } from "./tasks";
+import { renderTask, renderProjTasks, clearTasks } from "./tasks";
 
 
 export function createProj(projName, projKey){
@@ -20,7 +20,7 @@ export function renderProjList(){
         projTitle.innerHTML = projList[i].projName;
         projTitle.classList.add('projTitle');
         projTitle.addEventListener('click', ()=>{
-            renderProjTasks(projList[i]);
+            renderProjTasks(i);
         })
         const delProj = document.createElement('button');
         delProj.innerHTML = 'x';
@@ -36,17 +36,22 @@ export function renderProjList(){
     }
     localStorage.setItem('projList', JSON.stringify(projList));
 }
-export function renderProjTasks(project){
-    const taskList = document.getElementById('taskList');
-    const projTitle = document.getElementById('dispProj');
-    projTitle.innerHTML = project.projName;
-    projTitle.setAttribute('projKey', project.projKey);
-    clearTasks();
-    const tasks = project.taskList;
-    for(let i = 0; i < tasks.length; i++){
-        taskList.appendChild(renderTask(tasks[i]));
-    }
-}
+// export function renderProjTasks(project){
+//     // const projList = localStorage.getItem('projList');
+//     const taskList = document.getElementById('taskList');
+//     const projTitle = document.getElementById('dispProj');
+//     projTitle.innerHTML = project.projName;
+//     projTitle.setAttribute('projKey', project.projKey);
+//     clearTasks();
+//     const tasks = project.taskList;
+//     for(let i = 0; i < tasks.length; i++){
+//         tasks[i].key = i;
+//         taskList.appendChild(renderTask(tasks[i]));
+//     }
+//     // localStorage.setItem('projList', JSON.)
+//     console.log(tasks);
+//     return 
+// }
 export function processProject(e){
     e.preventDefault();
     const title = document.getElementById('newProj');

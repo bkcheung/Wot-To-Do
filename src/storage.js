@@ -26,7 +26,7 @@ export function storageAvailable(type) {
   }
 
   function defaultProj(){
-    const defaultProj = createProj('Today', 0);
+    const defaultProj = createProj('Home', 0);
     const defaultTask = createTask('Exercise','Leg day!!!',new Date(),'low');
     defaultProj.taskList.push(defaultTask);
     return defaultProj;
