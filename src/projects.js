@@ -29,6 +29,14 @@ export function renderProjList(){
                 type: 'text',
                 classList: 'modForm hidden',
             });
+            modForm.addEventListener('keyup', (e)=>{
+                if(e.key==='Escape'){
+                    toggleProjMod(e);
+                }
+                if(e.key==='Enter'){
+                    saveProjName(e);
+                }
+            })
             project.appendChild(modForm);
             //Submit mod form
             const modFormButton = Object.assign(document.createElement('button'),{
@@ -101,9 +109,7 @@ function clearProjects(){
 }
 
 function modProjName(e){
-    // first add a mod button, then comibne with delete button
     toggleProjMod(e);
-
 }
 
 function saveProjName(e){
@@ -118,7 +124,6 @@ function saveProjName(e){
         renderProjList();
     }
     toggleProjMod(e);
-
 }
 
 function toggleProjMod(e){

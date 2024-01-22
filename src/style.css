@@ -211,6 +211,8 @@ body {
 }
 .newTaskTitle {
     font-size: 15px;
+    margin-right: auto;
+    width: 80%;
 }
 .newTaskBody{
     display: flex;

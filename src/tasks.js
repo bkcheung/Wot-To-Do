@@ -1,9 +1,8 @@
 import { format } from "date-fns";
 
-export function createTask(title, details, dueDate, priority){
+export function createTask(title, dueDate, priority){
     return {
       title,
-      details,
       dueDate: format(dueDate, "MM/dd/yyyy"),
       priority,
       key: 0,
@@ -31,13 +30,6 @@ export function renderTask(task){
     const taskText = document.createElement('div');
     taskText.innerHTML = task.title;
     taskText.classList.add("taskText");
-
-    const descButton = document.createElement('button')
-    descButton.classList.add('descButton');
-    descButton.addEventListener('click', ()=>{
-      console.log(task.details);
-      //Add function to view details
-    });
 
     const dDate = document.createElement('div');
     dDate.innerHTML = task.dueDate;
@@ -69,7 +61,6 @@ export function renderTask(task){
     
     taskItem.appendChild(checkBox);
     taskItem.appendChild(taskText);
-    taskItem.appendChild(descButton);
     taskItem.appendChild(dDate);
     taskItem.appendChild(modButton);
     taskItem.appendChild(delButton);
@@ -101,7 +92,6 @@ export function clearTasks(){
 export function processTask(e) {
   let title = document.getElementById('newTitle');
   if(title !==""){
-    let details = document.getElementById('newDetails');
     let date = document.getElementById('dueDate');
     let dateV = date.value;
     if(dateV === ""){
@@ -111,14 +101,13 @@ export function processTask(e) {
       dateV = dateV.replace('-', '/'); //Prevent date offset
     }
     let priority = document.getElementById('taskPriority');
-    const addTask = createTask(title.value, details.value, dateV, 
+    const addTask = createTask(title.value, dateV, 
                               priority.getAttribute('data-value'));
     storeTask(addTask);
     e.preventDefault();
 
     //Reset fields  
     title.value = "";
-    details.value = "";
     date.value = null;
     priority.textContent = "Priority";
     priority.setAttribute('data-value','low');
@@ -142,7 +131,6 @@ function modifyTask(e){
   let selectedTask = e.target.closest('li');
   let taskList = selectedTask.closest('ul');
   let title = selectedTask.title;
-  let details = selectedTask.details;
   let dueDate = selectedTask.dueDate;
   let priority = selectedTask.priority;
   let complete = selectedTask.complete;
@@ -150,9 +138,7 @@ function modifyTask(e){
   console.log(selectedTask.closest('div'));
   // selectedTask.remove();
 }
-function viewDetails(e){
-  //Function to view details of task
-}
+
 
 function storeTask(task){
   const index = document.getElementById('dispProj').getAttribute('projKey');
