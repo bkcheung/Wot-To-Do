@@ -1,9 +1,9 @@
-import { format } from "date-fns";
+const dayjs = require('dayjs')
 
 export function createTask(title, dueDate, priority){
     return {
       title,
-      dueDate: format(dueDate, "MM/dd/yyyy"),
+      dueDate: dayjs(dueDate).format('MM/DD/YYYY'),
       priority,
       key: 0,
       complete: false,
@@ -106,7 +106,7 @@ function taskModForm(task){
   const modDate = Object.assign(document.createElement('input'), {
     type: 'date',
     classList: 'dueDateSet',
-    value: `${format(task.dueDate, "yyyy-MM-dd")}`
+    value: `${dayjs(task.dueDate).format('YYYY-MM-DD')}`,
   });
   tmodTop.appendChild(modTitle);
   tmodTop.appendChild(modDate);
@@ -181,9 +181,6 @@ export function processTask(e) {
     if(dateV === ""){
       dateV = new Date();
     }
-    else{
-      dateV = dateV.replace('-', '/'); //Prevent date offset
-    }
     let priority = document.getElementById('taskPriority');
     const addTask = createTask(title.value, dateV, 
                               priority.getAttribute('data-value'));
@@ -209,9 +206,9 @@ function processModTask(e){
   //Update in storage
   const task = projList[projKey].taskList[taskKey];
   task.title = modTitle;
-  task.dueDate = format(modDate, "MM/dd/yyyy");
+  task.dueDate = dayjs(modDate).format('MM/DD/YYYY');
+  console.log(task.dueDate);
   task.priority = modP;
-  console.log(task);
   localStorage.setItem('projList', JSON.stringify(projList));
   toggleTaskMod(e);
   renderProjTasks(projKey);
