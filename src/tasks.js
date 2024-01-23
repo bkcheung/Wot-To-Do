@@ -14,6 +14,12 @@ export function renderTask(task){
     taskItem.classList.add('task');
     taskItem.setAttribute('key', task.key);
 
+    const taskMain = document.createElement('div');
+    taskMain.classList.add('taskMain');
+
+    //Hidden Task mod form
+    const modForm = taskModForm(task);
+
     const checkBox = document.createElement('button');
     checkBox.innerHTML = '☑️';
     checkBox.addEventListener('click', ()=>{
@@ -39,6 +45,7 @@ export function renderTask(task){
     modButton.addEventListener('click', (e)=>{
       //add mod function
       modifyTask(e);
+      toggleTaskMod(e);
     })
 
     const delButton = document.createElement('button');
@@ -48,22 +55,24 @@ export function renderTask(task){
     })
 
     switch (task.priority){
-      case 'high':
+      case 'High':
         taskItem.setAttribute('style','border-left: 4px solid red');
         break;
-      case 'medium':
+      case 'Medium':
         taskItem.setAttribute('style','border-left: 4px solid orange');
         break;
-      case 'low':
+      case 'Low':
         taskItem.setAttribute('style','border-left: 4px solid green');
         break;
     };
     
-    taskItem.appendChild(checkBox);
-    taskItem.appendChild(taskText);
-    taskItem.appendChild(dDate);
-    taskItem.appendChild(modButton);
-    taskItem.appendChild(delButton);
+    taskMain.appendChild(checkBox);
+    taskMain.appendChild(taskText);
+    taskMain.appendChild(dDate);
+    taskMain.appendChild(modButton);
+    taskMain.appendChild(delButton);
+    taskItem.appendChild(taskMain);
+    taskItem.appendChild(modForm);
 
     return taskItem;
 }
@@ -82,6 +91,71 @@ export function renderProjTasks(projIndex){
   }
   localStorage.setItem('projList', JSON.stringify(projList));
   return 
+}
+function taskModForm(task){
+  const tmodForm = Object.assign(document.createElement('form'),{
+    classList: 'taskModForm hidden',
+  });
+  const tmodTop = Object.assign(document.createElement('div'),{
+    classList: 'newTaskBody',
+  });
+  const modTitle = Object.assign(document.createElement('input'), {
+    type: 'text',
+    classList: 'newTaskTitle',
+    id: 'modTitle',
+    value: `${task.title}`
+  });
+  const modDate = Object.assign(document.createElement('input'), {
+    type: 'date',
+    classList: 'dueDateSet',
+    id: 'modDate',
+    value: `${format(task.dueDate, "yyyy-MM-dd")}`
+  });
+  tmodTop.appendChild(modTitle);
+  tmodTop.appendChild(modDate);
+  tmodForm.appendChild(tmodTop);
+  const modButtons = Object.assign(document.createElement('div'),{
+    classList: 'newTaskButtons',
+  });
+  const modDropDown = Object.assign(document.createElement('div'),{
+    classList: 'dropDown',
+  });
+  const prioritySel = Object.assign(document.createElement('div'),{
+    classList: 'prioritySel',
+    innerHTML: `${task.priority}`,
+    'data-value': `${task.priority}`,
+  });
+  const dropContent = Object.assign(document.createElement('div'),{
+    classList: 'dropContent',
+  });
+  const lowButton = Object.assign(document.createElement('button'),{
+    classList: 'lowButton',
+    innerHTML: 'Low'
+  });
+  const medButton = Object.assign(document.createElement('button'),{
+    classList: 'medButton',
+    innerHTML: 'Med'
+  });
+  const hiButton = Object.assign(document.createElement('button'),{
+    classList: 'hiButton',
+    innerHTML: 'High'
+  });
+  const modButton = Object.assign(document.createElement('button'),{
+    type: 'submit',
+    innerHTML: 'Modify',
+    classList: 'submit',
+    id: 'modTaskButton'
+  });
+  dropContent.appendChild(lowButton);
+  dropContent.appendChild(medButton);
+  dropContent.appendChild(hiButton);
+  modDropDown.appendChild(prioritySel);
+  modDropDown.appendChild(dropContent);
+  modButtons.appendChild(modDropDown);
+  modButtons.appendChild(modButton);
+  tmodForm.appendChild(modButtons);
+
+  return tmodForm;
 }
 export function clearTasks(){
   let tasks = document.getElementsByTagName('li');
@@ -138,8 +212,13 @@ function modifyTask(e){
   console.log(selectedTask.closest('div'));
   // selectedTask.remove();
 }
-
-
+function toggleTaskMod(e){
+  const task = e.target.closest('li');
+  const taskMain = task.querySelector('.taskMain');
+  const modForm = task.querySelector('.taskModForm');
+  modForm.classList.toggle('hidden');
+  taskMain.classList.toggle('hidden');
+}
 function storeTask(task){
   const index = document.getElementById('dispProj').getAttribute('projKey');
   let projList = JSON.parse(localStorage.getItem('projList'));

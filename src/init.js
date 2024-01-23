@@ -24,17 +24,17 @@ export function pageInit(){
         toggleTaskAdd();
     })
     lowButton.addEventListener('click', (e)=>{
-      prioritySel.setAttribute('data-value','low');
+      prioritySel.setAttribute('data-value','Low');
       prioritySel.textContent = 'Low';
       e.preventDefault();
     });
     medButton.addEventListener('click', (e)=>{
-      prioritySel.setAttribute('data-value','medium');
+      prioritySel.setAttribute('data-value','Medium');
       prioritySel.textContent = 'Medium';
       e.preventDefault();
     });
     hiButton.addEventListener('click', (e)=>{
-      prioritySel.setAttribute('data-value','high');
+      prioritySel.setAttribute('data-value','High');
       prioritySel.textContent = 'High';
       e.preventDefault();
     });
@@ -46,7 +46,7 @@ export function pageInit(){
 
 function toggleTaskAdd(){
     const addTask = document.getElementById('addTask');
-    const addTaskForm = document.getElementById('newTaskInput')
+    const addTaskForm = document.getElementById('newTaskInput');
     addTask.classList.toggle('hidden');
     addTaskForm.classList.toggle('hidden');
 }
