@@ -29,8 +29,8 @@ export function pageInit(){
       e.preventDefault();
     });
     medButton.addEventListener('click', (e)=>{
-      prioritySel.setAttribute('data-value','Medium');
-      prioritySel.textContent = 'Medium';
+      prioritySel.setAttribute('data-value','Med');
+      prioritySel.textContent = 'Med';
       e.preventDefault();
     });
     hiButton.addEventListener('click', (e)=>{

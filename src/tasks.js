@@ -45,7 +45,6 @@ export function renderTask(task){
     modButton.addEventListener('click', (e)=>{
       //add mod function
       modifyTask(e);
-      toggleTaskMod(e);
     })
 
     const delButton = document.createElement('button');
@@ -58,7 +57,7 @@ export function renderTask(task){
       case 'High':
         taskItem.setAttribute('style','border-left: 4px solid red');
         break;
-      case 'Medium':
+      case 'Med':
         taskItem.setAttribute('style','border-left: 4px solid orange');
         break;
       case 'Low':
@@ -102,13 +101,11 @@ function taskModForm(task){
   const modTitle = Object.assign(document.createElement('input'), {
     type: 'text',
     classList: 'newTaskTitle',
-    id: 'modTitle',
     value: `${task.title}`
   });
   const modDate = Object.assign(document.createElement('input'), {
     type: 'date',
     classList: 'dueDateSet',
-    id: 'modDate',
     value: `${format(task.dueDate, "yyyy-MM-dd")}`
   });
   tmodTop.appendChild(modTitle);
@@ -123,7 +120,6 @@ function taskModForm(task){
   const prioritySel = Object.assign(document.createElement('div'),{
     classList: 'prioritySel',
     innerHTML: `${task.priority}`,
-    'data-value': `${task.priority}`,
   });
   const dropContent = Object.assign(document.createElement('div'),{
     classList: 'dropContent',
@@ -132,20 +128,35 @@ function taskModForm(task){
     classList: 'lowButton',
     innerHTML: 'Low'
   });
+  lowButton.addEventListener('click', (e)=>{
+    prioritySel.innerHTML = 'Low';
+    e.preventDefault();
+  })
   const medButton = Object.assign(document.createElement('button'),{
     classList: 'medButton',
     innerHTML: 'Med'
   });
+  medButton.addEventListener('click', (e)=>{
+    prioritySel.innerHTML = 'Med';
+    e.preventDefault();
+  })
   const hiButton = Object.assign(document.createElement('button'),{
     classList: 'hiButton',
     innerHTML: 'High'
   });
+  hiButton.addEventListener('click', (e)=>{
+    prioritySel.innerHTML = 'High';
+    e.preventDefault();
+  })
   const modButton = Object.assign(document.createElement('button'),{
     type: 'submit',
     innerHTML: 'Modify',
     classList: 'submit',
-    id: 'modTaskButton'
   });
+  modButton.addEventListener('click', (e)=>{
+    processModTask(e);
+  });
+
   dropContent.appendChild(lowButton);
   dropContent.appendChild(medButton);
   dropContent.appendChild(hiButton);
@@ -154,7 +165,6 @@ function taskModForm(task){
   modButtons.appendChild(modDropDown);
   modButtons.appendChild(modButton);
   tmodForm.appendChild(modButtons);
-
   return tmodForm;
 }
 export function clearTasks(){
@@ -184,8 +194,27 @@ export function processTask(e) {
     title.value = "";
     date.value = null;
     priority.textContent = "Priority";
-    priority.setAttribute('data-value','low');
+    priority.setAttribute('data-value','Low');
   }
+}
+function processModTask(e){
+  e.preventDefault();
+  const modTask = e.target.closest('form');
+  const modTitle = modTask.querySelector('.newTaskTitle').value;
+  let modDate = modTask.querySelector('.dueDateSet').value;
+  const modP = modTask.querySelector('.prioritySel').innerHTML;
+  const projList = JSON.parse(localStorage.getItem('projList'));
+  const projKey = document.getElementById('dispProj').getAttribute('projKey');
+  const taskKey = e.target.closest('li').getAttribute('key');
+  //Update in storage
+  const task = projList[projKey].taskList[taskKey];
+  task.title = modTitle;
+  task.dueDate = format(modDate, "MM/dd/yyyy");
+  task.priority = modP;
+  console.log(task);
+  localStorage.setItem('projList', JSON.stringify(projList));
+  toggleTaskMod(e);
+  renderProjTasks(projKey);
 }
 function deleteTask(e){
   const index = document.getElementById('dispProj').getAttribute('projKey');
@@ -202,15 +231,7 @@ function deleteTask(e){
   renderProjTasks([index]);
 }
 function modifyTask(e){
-  let selectedTask = e.target.closest('li');
-  let taskList = selectedTask.closest('ul');
-  let title = selectedTask.title;
-  let dueDate = selectedTask.dueDate;
-  let priority = selectedTask.priority;
-  let complete = selectedTask.complete;
-
-  console.log(selectedTask.closest('div'));
-  // selectedTask.remove();
+  toggleTaskMod(e);
 }
 function toggleTaskMod(e){
   const task = e.target.closest('li');
