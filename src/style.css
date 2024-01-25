@@ -145,6 +145,11 @@ body {
     display: flex;
     align-items: center;
 }
+.task.completed{
+    background-color: rgb(238 238 238);
+    text-decoration: line-through;
+    color: grey;
+}
 .task:hover{
     box-shadow: 8px 5px 5px rgba(128, 128, 128, 0.25);
 }
@@ -161,12 +166,21 @@ body {
 .taskText{
     margin-right: auto;
 }
-.descButton{
-    background-image: url('img/details.png');
-    width: 18px;
-    height: 18px;
+.checked{
+    background-image: url('img/checked.jpeg');
+    width: 16px;
+    height: 16px;
     background-size: contain;
     margin-right: 5px;
+    opacity: 0.85;
+}
+.unchecked{
+    background-image: url('img/emptyCheck.jpeg');
+    width: 16px;
+    height: 16px;
+    background-size: contain;
+    margin-right: 5px;
+    opacity: 0.85;
 }
 .modButton{
     background-image: url('img/edit.png');

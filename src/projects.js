@@ -28,6 +28,7 @@ export function renderProjList(){
             const modForm = Object.assign(document.createElement('input'),{
                 type: 'text',
                 classList: 'modForm hidden',
+                innerHTML: `${projList[i].projName}`,
             });
             modForm.addEventListener('keyup', (e)=>{
                 if(e.key==='Escape'){

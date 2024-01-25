@@ -17,20 +17,16 @@ export function renderTask(task){
     const taskMain = document.createElement('div');
     taskMain.classList.add('taskMain');
 
-    //Hidden Task mod form
-    const modForm = taskModForm(task);
-
     const checkBox = document.createElement('button');
-    checkBox.innerHTML = '☑️';
-    checkBox.addEventListener('click', ()=>{
-      task.complete = !task.complete;
-      switch(task.complete){
-        case true:
-          checkBox.innerHTML = '✅';
-          break;
-        case false:
-          checkBox.innerHTML = '☑️';
-      }
+    if(task.complete){
+      checkBox.classList.add('checked');
+      taskItem.classList.add('completed');
+    }
+    else{
+      checkBox.classList.add('unchecked');
+    }
+    checkBox.addEventListener('click', (e)=>{
+      toggleComplete(e, task);
     })
     
     const taskText = document.createElement('div');
@@ -43,8 +39,7 @@ export function renderTask(task){
     const modButton = document.createElement('button');
     modButton.classList.add('modButton');
     modButton.addEventListener('click', (e)=>{
-      //add mod function
-      modifyTask(e);
+      toggleTaskMod(e);
     })
 
     const delButton = document.createElement('button');
@@ -64,6 +59,7 @@ export function renderTask(task){
         taskItem.setAttribute('style','border-left: 4px solid green');
         break;
     };
+    const modForm = taskModForm(task);
     
     taskMain.appendChild(checkBox);
     taskMain.appendChild(taskText);
@@ -90,6 +86,9 @@ export function renderProjTasks(projIndex){
   }
   localStorage.setItem('projList', JSON.stringify(projList));
   return 
+}
+function initTaskButtons(task){
+  
 }
 function taskModForm(task){
   const tmodForm = Object.assign(document.createElement('form'),{
@@ -176,17 +175,14 @@ export function clearTasks(){
 export function processTask(e) {
   let title = document.getElementById('newTitle');
   if(title !==""){
+    e.preventDefault();
     let date = document.getElementById('dueDate');
     let dateV = date.value;
-    if(dateV === ""){
-      dateV = new Date();
-    }
+    if(dateV === ""){dateV = new Date();}
     let priority = document.getElementById('taskPriority');
     const addTask = createTask(title.value, dateV, 
                               priority.getAttribute('data-value'));
     storeTask(addTask);
-    e.preventDefault();
-
     //Reset fields  
     title.value = "";
     date.value = null;
@@ -200,6 +196,7 @@ function processModTask(e){
   const modTitle = modTask.querySelector('.newTaskTitle').value;
   let modDate = modTask.querySelector('.dueDateSet').value;
   const modP = modTask.querySelector('.prioritySel').innerHTML;
+
   const projList = JSON.parse(localStorage.getItem('projList'));
   const projKey = document.getElementById('dispProj').getAttribute('projKey');
   const taskKey = e.target.closest('li').getAttribute('key');
@@ -207,8 +204,8 @@ function processModTask(e){
   const task = projList[projKey].taskList[taskKey];
   task.title = modTitle;
   task.dueDate = dayjs(modDate).format('MM/DD/YYYY');
-  console.log(task.dueDate);
   task.priority = modP;
+  
   localStorage.setItem('projList', JSON.stringify(projList));
   toggleTaskMod(e);
   renderProjTasks(projKey);
@@ -227,15 +224,21 @@ function deleteTask(e){
   }
   renderProjTasks([index]);
 }
-function modifyTask(e){
-  toggleTaskMod(e);
-}
 function toggleTaskMod(e){
   const task = e.target.closest('li');
   const taskMain = task.querySelector('.taskMain');
   const modForm = task.querySelector('.taskModForm');
   modForm.classList.toggle('hidden');
   taskMain.classList.toggle('hidden');
+}
+function toggleComplete(e, task){
+  task.complete = !task.complete;
+  const currTask = e.target.closest('li');
+  currTask.classList.toggle('completed');
+  const checkBox = e.target;
+  checkBox.classList.toggle('checked');
+  checkBox.classList.toggle('unchecked');
+  saveTask(task);
 }
 function storeTask(task){
   const index = document.getElementById('dispProj').getAttribute('projKey');
@@ -244,4 +247,12 @@ function storeTask(task){
   taskList.push(task);
   localStorage.setItem('projList',JSON.stringify(projList));
   renderProjTasks(index);
+}
+function saveTask(task){
+  const projList = JSON.parse(localStorage.getItem('projList'));
+  const projKey = document.getElementById('dispProj').getAttribute('projKey');
+  const taskKey = task.key;
+  //Update in storage
+  projList[projKey].taskList[taskKey] = task;
+  localStorage.setItem('projList', JSON.stringify(projList));
 }
