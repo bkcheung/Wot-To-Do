@@ -14,6 +14,7 @@ export function pageInit(){
     const addProj = document.getElementById('addProj');
     const addProjSubmit = document.getElementById('subProj');
     const newTitle = document.getElementById('newTitle');
+    const newProj = document.getElementById('newProj');
 
     menu.addEventListener('click', ()=>{
       pageLeft.classList.toggle('hidden');
@@ -28,12 +29,23 @@ export function pageInit(){
     })
     addProj.addEventListener('click', ()=>{
         toggleProjAdd();
+        document.getElementById('newProj').focus();
     });
     addProjSubmit.addEventListener('click', (e)=>{
         processProject(e);
         toggleProjAdd();
         renderProjList();
     });
+    newProj.addEventListener('keyup', (e)=>{
+      if(e.key==="Enter"){
+        processProject(e);
+        toggleProjAdd();
+        renderProjList();
+      }
+      if(e.key==="Escape"){
+        toggleProjAdd();
+      }
+    })
     addTask.addEventListener('click', ()=>{
         toggleTaskAdd();
         document.getElementById('newTitle').focus();
