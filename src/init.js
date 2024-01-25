@@ -12,7 +12,8 @@ export function pageInit(){
     const hiButton = document.getElementById('hiButton');
     const submit = document.getElementById('addTaskButton')
     const addProj = document.getElementById('addProj');
-    const addProjSubmit = document.getElementById('subProj')
+    const addProjSubmit = document.getElementById('subProj');
+    const newTitle = document.getElementById('newTitle');
 
     menu.addEventListener('click', ()=>{
       pageLeft.classList.toggle('hidden');
@@ -35,6 +36,7 @@ export function pageInit(){
     });
     addTask.addEventListener('click', ()=>{
         toggleTaskAdd();
+        document.getElementById('newTitle').focus();
     });
     lowButton.addEventListener('click', (e)=>{
       prioritySel.setAttribute('data-value','Low');
@@ -55,6 +57,15 @@ export function pageInit(){
       processTask(e);
       toggleTaskAdd();
     });
+    newTitle.addEventListener('keyup', (e)=>{
+      if(e.key === 'Enter'){
+        processTask(e);
+        toggleTaskAdd();
+      }
+      if(e.key === 'Escape'){
+        toggleTaskAdd();
+      }
+    })
   }
 
 function toggleTaskAdd(){

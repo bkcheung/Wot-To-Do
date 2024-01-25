@@ -173,13 +173,13 @@ export function clearTasks(){
   }
 }
 export function processTask(e) {
-  let title = document.getElementById('newTitle');
+  const title = document.getElementById('newTitle');
   if(title !==""){
     e.preventDefault();
-    let date = document.getElementById('dueDate');
+    const date = document.getElementById('dueDate');
     let dateV = date.value;
     if(dateV === ""){dateV = new Date();}
-    let priority = document.getElementById('taskPriority');
+    const priority = document.getElementById('taskPriority');
     const addTask = createTask(title.value, dateV, 
                               priority.getAttribute('data-value'));
     storeTask(addTask);
