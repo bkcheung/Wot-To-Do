@@ -4,6 +4,8 @@ import { processProject, renderProjList } from "./projects";
 export function pageInit(){
     renderProjList(projList);
     renderProjTasks(0);
+    const menu = document.getElementById('menu');
+    const pageLeft = document.getElementById('pageLeft');
     const prioritySel = document.getElementById('taskPriority');
     const lowButton = document.getElementById('lowButton');
     const medButton = document.getElementById('medButton');
@@ -12,17 +14,28 @@ export function pageInit(){
     const addProj = document.getElementById('addProj');
     const addProjSubmit = document.getElementById('subProj')
 
+    menu.addEventListener('click', ()=>{
+      pageLeft.classList.toggle('hidden');
+    });
+    window.addEventListener('resize', ()=>{
+      if(window.innerWidth <600) {
+        pageLeft.classList.add('hidden');
+      }
+      if(window.innerWidth > 600){
+        pageLeft.classList.remove('hidden');
+      }
+    })
     addProj.addEventListener('click', ()=>{
         toggleProjAdd();
-    })
+    });
     addProjSubmit.addEventListener('click', (e)=>{
         processProject(e);
         toggleProjAdd();
         renderProjList();
-    })
+    });
     addTask.addEventListener('click', ()=>{
         toggleTaskAdd();
-    })
+    });
     lowButton.addEventListener('click', (e)=>{
       prioritySel.setAttribute('data-value','Low');
       prioritySel.textContent = 'Low';
