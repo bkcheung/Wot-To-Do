@@ -1,7 +1,9 @@
 import { processTask, renderProjTasks } from "./tasks";
 import { processProject, renderProjList } from "./projects";
+import { listStorage } from "./storage";
 
 export function pageInit(){
+    listStorage();
     renderProjList(projList);
     renderProjTasks(0);
     const menu = document.getElementById('menu');

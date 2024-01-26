@@ -60,6 +60,9 @@ body {
 #pageLeft.hidden{
     display:none;
 }
+#homeTitle{
+    margin-bottom: 10px;
+}
 #projListTitle{
     margin-bottom: 10px;
 }

@@ -7,69 +7,77 @@ export function createProj(projName, projKey){
         taskList: [],
     }
 }
+export function renderHomeList(){
+    const home = document.getElementById('homeList');
+    let homeList = JSON.parse(localStorage.getItem('homeList'));
+}
 export function renderProjList(){
     const projects = document.getElementById('projList');
     let projList = JSON.parse(localStorage.getItem('projList'));
     clearProjects();
-    //Render tasks
     for(let i = 0; i < projList.length; i++){
-        const project = document.createElement('div');
-        project.classList.add('project');
-        const projTitle = document.createElement('button');
-        projTitle.innerHTML = projList[i].projName;
-        projTitle.classList.add('projTitle');
-        projTitle.addEventListener('click', ()=>{
-            renderProjTasks(i);
-        })
-        project.appendChild(projTitle);
-
-        if(i>0){
-            //Hidden mod form
-            const modForm = Object.assign(document.createElement('input'),{
-                type: 'text',
-                classList: 'modForm hidden',
-                innerHTML: `${projList[i].projName}`,
-            });
-            modForm.addEventListener('keyup', (e)=>{
-                if(e.key==='Escape'){
-                    toggleProjMod(e);
-                }
-                if(e.key==='Enter'){
-                    saveProjName(e);
-                }
-            })
-            project.appendChild(modForm);
-            //Submit mod form
-            const modFormButton = Object.assign(document.createElement('button'),{
-                classList: 'modFormButton hidden',
-                innerHTML: '↳',
-            });
-            modFormButton.addEventListener('click',(e)=>{
-                saveProjName(e);
-            })
-            project.appendChild(modFormButton);
-            //Mod button
-            const modButton = document.createElement('button');
-            modButton.classList.add('projMod');
-            modButton.innerHTML = '✎';
-            modButton.addEventListener('click',(e)=>{
-                modProjName(e);
-            })
-            project.appendChild(modButton);
-            //Del button
-            const delProj = document.createElement('button');
-            delProj.innerHTML = 'x';
-            delProj.classList.add('delProj');
-            delProj.addEventListener('click',(e)=>{
-                deleteProj(e);
-            })
-            delProj.setAttribute('key', i);
-            projList[i].projKey = i;
-            project.appendChild(delProj);
-        }
+        const project = renderProject(projList[i], i);
         projects.appendChild(project);
     }
     localStorage.setItem('projList', JSON.stringify(projList));
+}
+function renderProject(proj, key){
+    const project = document.createElement('div');
+    project.classList.add('project');
+    const projTitle = document.createElement('button');
+    projTitle.innerHTML = proj.projName;
+    projTitle.classList.add('projTitle');
+    projTitle.addEventListener('click', ()=>{
+        renderProjTasks(key);
+    })
+    project.appendChild(projTitle);
+    //For mod
+    const modBundle = renderModForm(proj);
+    project.appendChild(modBundle[0]);
+    project.appendChild(modBundle[1]);
+    project.appendChild(modBundle[2]);
+    //Del button
+    const delProj = document.createElement('button');
+    delProj.innerHTML = 'x';
+    delProj.classList.add('delProj');
+    delProj.addEventListener('click',(e)=>{
+        deleteProj(e);
+    })
+    delProj.setAttribute('key', key);
+    proj.projKey = key;
+    project.appendChild(delProj);
+    return project;
+}
+function renderModForm(proj){
+    const modForm = Object.assign(document.createElement('input'),{
+        type: 'text',
+        classList: 'modForm hidden',
+        value: `${proj.projName}`,
+    });
+    modForm.addEventListener('keyup', (e)=>{
+        if(e.key==='Escape'){
+            toggleProjMod(e);
+        }
+        if(e.key==='Enter'){
+            saveProjName(e);
+        }
+    })
+    const modFormButton = Object.assign(document.createElement('button'),{
+        classList: 'modFormButton hidden',
+        innerHTML: '↳',
+    });
+    modFormButton.addEventListener('click',(e)=>{
+        saveProjName(e);
+    })
+    const modButton = document.createElement('button');
+    modButton.classList.add('projMod');
+    modButton.innerHTML = '✎';
+    modButton.addEventListener('click',(e)=>{
+        modProjName(e);
+        e.target.closest('div').querySelector('.modForm').focus();
+    });
+    const modBundle = [modForm, modFormButton, modButton]
+    return modBundle;
 }
 export function processProject(e){
     e.preventDefault();
@@ -126,7 +134,6 @@ function saveProjName(e){
     }
     toggleProjMod(e);
 }
-
 function toggleProjMod(e){
     const projDiv = e.target.closest('div')
     const proj = projDiv.querySelector('.projTitle');
