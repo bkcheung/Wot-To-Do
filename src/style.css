@@ -60,6 +60,12 @@ body {
 #pageLeft.hidden{
     display:none;
 }
+#home{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-bottom: 10px;
+}
 #homeTitle{
     margin-bottom: 10px;
 }
@@ -69,7 +75,6 @@ body {
 #projList {
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 .project{
     display: flex;
@@ -78,8 +83,9 @@ body {
 .projTitle{
     font-family: 'Roboto-Light', sans-serif;
     font-size: medium;
+    color: rgb(79, 78, 78);
     padding: 10px;
-    flex: 1
+    flex: 1;
 }
 .projTitle.hidden{
     display:none;

@@ -72,7 +72,7 @@ export function renderTask(task){
     return taskItem;
 }
 export function renderProjTasks(projIndex){
-  const projList = JSON.parse(localStorage.getItem('projList'));
+  let projList = JSON.parse(localStorage.getItem('projList'));
   let project = projList[projIndex];
   const taskList = document.getElementById('taskList');
   const projTitle = document.getElementById('dispProj');
@@ -85,11 +85,9 @@ export function renderProjTasks(projIndex){
       taskList.appendChild(renderTask(tasks[i]));
   }
   localStorage.setItem('projList', JSON.stringify(projList));
-  return 
+  return;
 }
-function initTaskButtons(task){
-  
-}
+
 function taskModForm(task){
   const tmodForm = Object.assign(document.createElement('form'),{
     classList: 'taskModForm hidden',

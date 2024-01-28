@@ -7,21 +7,33 @@ export function createProj(projName, projKey){
         taskList: [],
     }
 }
-export function renderHomeList(){
-    const home = document.getElementById('homeList');
-    let homeList = JSON.parse(localStorage.getItem('homeList'));
-}
+// export function renderHomeList(){
+//     const home = document.getElementById('home');
+//     let homeList = JSON.parse(localStorage.getItem('homeList'));
+//     for(let i=0; i <3; i++){
+//         const project = renderProject(homeList[i], i, "home");
+//         home.appendChild(project);    
+//     }
+//     localStorage.setItem('homeList', JSON.stringify(homeList));
+// }
 export function renderProjList(){
+    const home = document.getElementById('home');
     const projects = document.getElementById('projList');
     let projList = JSON.parse(localStorage.getItem('projList'));
     clearProjects();
     for(let i = 0; i < projList.length; i++){
-        const project = renderProject(projList[i], i);
-        projects.appendChild(project);
+        if(i < 3){
+            const project = renderProject(projList[i], i, "home");
+            home.appendChild(project);    
+        }
+        else{
+            const project = renderProject(projList[i], i, "project");
+            projects.appendChild(project);
+        }
     }
     localStorage.setItem('projList', JSON.stringify(projList));
 }
-function renderProject(proj, key){
+function renderProject(proj, key, listType){
     const project = document.createElement('div');
     project.classList.add('project');
     const projTitle = document.createElement('button');
@@ -31,23 +43,23 @@ function renderProject(proj, key){
         renderProjTasks(key);
     })
     project.appendChild(projTitle);
-    //For mod
-    const modBundle = renderModForm(proj);
-    project.appendChild(modBundle[0]);
-    project.appendChild(modBundle[1]);
-    project.appendChild(modBundle[2]);
-    //Del button
-    const delProj = document.createElement('button');
-    delProj.innerHTML = 'x';
-    delProj.classList.add('delProj');
-    delProj.addEventListener('click',(e)=>{
-        deleteProj(e);
-    })
-    delProj.setAttribute('key', key);
+    if(listType==="project"){
+        const modBundle = renderModForm(proj);
+        project.appendChild(modBundle[0]);
+        project.appendChild(modBundle[1]);
+        project.appendChild(modBundle[2]);
+        const delProj = document.createElement('button');
+        delProj.innerHTML = 'x';
+        delProj.classList.add('delProj');
+        delProj.addEventListener('click',(e)=>{
+            deleteProj(e);
+        });
+        delProj.setAttribute('key', key);
+        project.appendChild(delProj);   
+    }
     proj.projKey = key;
-    project.appendChild(delProj);
     return project;
-}
+}   
 function renderModForm(proj){
     const modForm = Object.assign(document.createElement('input'),{
         type: 'text',
@@ -110,8 +122,8 @@ function deleteProj(e){
 }
 
 function clearProjects(){
-    const projects = document.getElementById('projList');
-    const listProj = projects.getElementsByClassName('project');
+    const listProj = document.getElementsByClassName('project');
+    console.log(listProj);
     for(let i = listProj.length-1; i > -1; i--){
         listProj[i].remove();
     }
