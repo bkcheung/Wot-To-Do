@@ -1,4 +1,8 @@
-const dayjs = require('dayjs')
+import { renderProjList } from './projects';
+
+const dayjs = require('dayjs');
+const isToday = require('dayjs/plugin/isToday');
+dayjs.extend(isToday);
 
 export function createTask(title, dueDate, priority){
     return {
@@ -180,7 +184,7 @@ export function processTask(e) {
     const priority = document.getElementById('taskPriority');
     const addTask = createTask(title.value, dateV, 
                               priority.getAttribute('data-value'));
-    storeTask(addTask);
+    storeTask(addTask, dateV);
     //Reset fields  
     title.value = "";
     date.value = null;
@@ -238,11 +242,17 @@ function toggleComplete(e, task){
   checkBox.classList.toggle('unchecked');
   saveTask(task);
 }
-function storeTask(task){
+function storeTask(task, date){
   const index = document.getElementById('dispProj').getAttribute('projKey');
   let projList = JSON.parse(localStorage.getItem('projList'));
   let taskList = projList[index].taskList;
   taskList.push(task);
+  // if(index !==0){//Add to all list if not already
+  //   projList[0].taskList.push(task);
+  // }
+  // if(dayjs(date).isToday() && index !==1){ //Add to today list if not already
+  //   projList[1].taskList.push(task);
+  // }
   localStorage.setItem('projList',JSON.stringify(projList));
   renderProjTasks(index);
 }

@@ -17,7 +17,7 @@ export function storageAvailable(type) {
   }
 
   export function listStorage(){
-    const defaultProjList = defaultList();
+    const defaultProjList = [defaultList()];
     let projList = localStorage.getItem('projList');
     projList =  JSON.parse(projList || JSON.stringify(defaultProjList));
     localStorage.setItem('projList',JSON.stringify(projList));
@@ -26,12 +26,11 @@ export function storageAvailable(type) {
   }
 
   function defaultList(){
-    const all = createProj('All Tasks', 0);
-    const today = createProj('Today', 1);
-    const week = createProj('This Week', 2);
-    const newProj = createProj('New Project', 3);
+    // const all = createProj('All Tasks', 0);
+    // const today = createProj('Today', 1);
+    const newProj = createProj('New Project', 0);
     const defaultTask = createTask('Example Task',new Date(),'Low');
     newProj.taskList.push(defaultTask);
-    const defaultList = [all, today, week, newProj];
-    return defaultList;
+    // const defaultList = [all, today, newProj];
+    return newProj;
   }

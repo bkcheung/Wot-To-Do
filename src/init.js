@@ -1,13 +1,17 @@
 import { processTask, renderProjTasks } from "./tasks";
 import { processProject, renderProjList } from "./projects";
 import { listStorage } from "./storage";
+import { dispAllTasks, dispTodayTasks } from "./home";
 
 export function pageInit(){
     listStorage();
     renderProjList(projList);
     renderProjTasks(0);
+
     const menu = document.getElementById('menu');
     const pageLeft = document.getElementById('pageLeft');
+    const allTasks = document.getElementById('allTasks');
+    const today = document.getElementById('today');
     const prioritySel = document.getElementById('taskPriority');
     const lowButton = document.getElementById('lowButton');
     const medButton = document.getElementById('medButton');
@@ -48,6 +52,16 @@ export function pageInit(){
         toggleProjAdd();
       }
     })
+    // allTasks.classList.add('project');
+    allTasks.addEventListener('click', ()=>{
+      dispAllTasks();
+      hideTaskAdd();
+    })
+    // today.classList.add('project');
+    today.addEventListener('click', ()=>{
+      dispTodayTasks();
+      hideTaskAdd();
+    })
     addTask.addEventListener('click', ()=>{
         toggleTaskAdd();
         document.getElementById('newTitle').focus();
@@ -81,17 +95,20 @@ export function pageInit(){
       }
     })
   }
-
 function toggleTaskAdd(){
     const addTask = document.getElementById('addTask');
     const addTaskForm = document.getElementById('newTaskInput');
     addTask.classList.toggle('hidden');
     addTaskForm.classList.toggle('hidden');
 }
-
 function toggleProjAdd(){
     const addProj = document.getElementById('addProj');
     const addProjForm = document.getElementById('projForm');
     addProj.classList.toggle('hidden');
     addProjForm.classList.toggle('hidden');
+}
+
+function hideTaskAdd(){
+  const taskAddSection = document.getElementById('addTaskSection');
+  taskAddSection.classList.add('hidden');
 }

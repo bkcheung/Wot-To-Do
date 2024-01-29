@@ -76,6 +76,12 @@ body {
     display: flex;
     flex-direction: column;
 }
+#allTasks{
+    text-align: center;
+}
+#today{
+    text-align: center;
+}
 .project{
     display: flex;
     width: 100%;
@@ -119,6 +125,9 @@ body {
     display: none;
 }
 .delProj.hidden{
+    display:none;
+}
+#addTaskSection.hidden{
     display:none;
 }
 #addProj{
