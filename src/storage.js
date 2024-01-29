@@ -26,11 +26,8 @@ export function storageAvailable(type) {
   }
 
   function defaultList(){
-    // const all = createProj('All Tasks', 0);
-    // const today = createProj('Today', 1);
     const newProj = createProj('New Project', 0);
     const defaultTask = createTask('Example Task',new Date(),'Low');
     newProj.taskList.push(defaultTask);
-    // const defaultList = [all, today, newProj];
     return newProj;
   }

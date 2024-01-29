@@ -52,12 +52,10 @@ export function pageInit(){
         toggleProjAdd();
       }
     })
-    // allTasks.classList.add('project');
     allTasks.addEventListener('click', ()=>{
       dispAllTasks();
       hideTaskAdd();
     })
-    // today.classList.add('project');
     today.addEventListener('click', ()=>{
       dispTodayTasks();
       hideTaskAdd();
