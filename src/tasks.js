@@ -72,10 +72,9 @@ export function renderTask(task){
     return taskItem;
 }
 export function renderProjTasks(projID){
-  //FOR BONNIE: ok so you need to make it so it takes in projID and finds the right project to go into!!
   let projList = JSON.parse(localStorage.getItem('projList'));
-  const pIndex = projList.findIndex(item => {
-    if (item.projID===projID) return true;
+  let pIndex = projList.findIndex(item => {
+    if (item.projID===Number(projID)) return true;
   });
   const project = projList[pIndex];
   const taskList = document.getElementById('taskList');
@@ -85,10 +84,8 @@ export function renderProjTasks(projID){
   clearTasks();
   const tasks = project.taskList;
   for(let i = 0; i < tasks.length; i++){
-      // tasks[i].taskID = i;
       taskList.appendChild(renderTask(tasks[i]));
   }
-  // localStorage.setItem('projList', JSON.stringify(projList));
   return;
 }
 

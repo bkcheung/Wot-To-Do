@@ -98,7 +98,6 @@ function deleteProj(e){
 
     for(let i = projList.length-1; i > -1; i--){
         if(projList[i].projID === projID){
-            // console.log(i);
             projList.splice(i,1);
             localStorage.setItem('projList', JSON.stringify(projList));
         }
