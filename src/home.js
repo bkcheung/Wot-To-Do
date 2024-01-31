@@ -9,6 +9,7 @@ export function dispAllTasks(){
     const projTitle = document.getElementById('dispProj');
     clearTasks();
     projTitle.innerHTML = 'All Tasks';
+    // projTitle.setAttribute('projID', 'All');
     for(let i=0; i<projList.length; i++){
         const tasks = projList[i].taskList;
         for(let i=0; i<tasks.length; i++){
@@ -24,6 +25,7 @@ export function dispTodayTasks(){
     const projTitle = document.getElementById('dispProj');
     clearTasks();
     projTitle.innerHTML = 'Today';
+    // projTitle.setAttribute('projID', 'Today');
     for(let i=0; i<projList.length; i++){
         const tasks = projList[i].taskList;
         for(let i=0; i<tasks.length; i++){

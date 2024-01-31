@@ -1,18 +1,18 @@
 const dayjs = require('dayjs');
 
-export function createTask(title, dueDate, priority){
+export function createTask(title, dueDate, priority, taskID){
     return {
       title,
       dueDate: dayjs(dueDate).format('MM/DD/YYYY'),
       priority,
-      key: 0,
+      taskID,
       complete: false,
     }
 }
 export function renderTask(task){
     const taskItem = document.createElement('li');
     taskItem.classList.add('task');
-    taskItem.setAttribute('key', task.key);
+    taskItem.setAttribute('taskID', task.taskID);
 
     const taskMain = document.createElement('div');
     taskMain.classList.add('taskMain');
@@ -71,20 +71,24 @@ export function renderTask(task){
 
     return taskItem;
 }
-export function renderProjTasks(projIndex){
+export function renderProjTasks(projID){
+  //FOR BONNIE: ok so you need to make it so it takes in projID and finds the right project to go into!!
   let projList = JSON.parse(localStorage.getItem('projList'));
-  let project = projList[projIndex];
+  const pIndex = projList.findIndex(item => {
+    if (item.projID===projID) return true;
+  });
+  const project = projList[pIndex];
   const taskList = document.getElementById('taskList');
   const projTitle = document.getElementById('dispProj');
   projTitle.innerHTML = project.projName;
-  projTitle.setAttribute('projKey', project.projKey);
+  projTitle.setAttribute('projID', project.projID);
   clearTasks();
   const tasks = project.taskList;
   for(let i = 0; i < tasks.length; i++){
-      tasks[i].key = i;
+      // tasks[i].taskID = i;
       taskList.appendChild(renderTask(tasks[i]));
   }
-  localStorage.setItem('projList', JSON.stringify(projList));
+  // localStorage.setItem('projList', JSON.stringify(projList));
   return;
 }
 
@@ -171,6 +175,7 @@ export function clearTasks(){
   }
 }
 export function processTask(e) {
+  let taskID = Number(localStorage.getItem('taskID'));
   const title = document.getElementById('newTitle');
   if(title !==""){
     e.preventDefault();
@@ -179,8 +184,10 @@ export function processTask(e) {
     if(dateV === ""){dateV = new Date();}
     const priority = document.getElementById('taskPriority');
     const addTask = createTask(title.value, dateV, 
-                              priority.getAttribute('data-value'));
-    storeTask(addTask, dateV);
+                              priority.getAttribute('data-value'), taskID);
+    taskID++;
+    localStorage.setItem('taskID', taskID);
+    storeTask(addTask);
     //Reset fields  
     title.value = "";
     date.value = null;
@@ -190,32 +197,33 @@ export function processTask(e) {
 }
 function processModTask(e){
   e.preventDefault();
-  const modTask = e.target.closest('form');
+  const modTask = e.target.closest('form[class=taskModForm]');
   const modTitle = modTask.querySelector('.newTaskTitle').value;
   let modDate = modTask.querySelector('.dueDateSet').value;
   const modP = modTask.querySelector('.prioritySel').innerHTML;
 
   const projList = JSON.parse(localStorage.getItem('projList'));
-  const projKey = document.getElementById('dispProj').getAttribute('projKey');
-  const taskKey = e.target.closest('li').getAttribute('key');
+  const projID = document.getElementById('dispProj').getAttribute('projID');
+  const taskID = e.target.closest('li').getAttribute('taskID');
+  console.log(taskID);
   //Update in storage
-  const task = projList[projKey].taskList[taskKey];
+  const task = projList[projID].taskList[taskID];
   task.title = modTitle;
   task.dueDate = dayjs(modDate).format('MM/DD/YYYY');
   task.priority = modP;
   
   localStorage.setItem('projList', JSON.stringify(projList));
   toggleTaskMod(e);
-  renderProjTasks(projKey);
+  renderProjTasks(projID);
 }
 function deleteTask(e){
-  const index = document.getElementById('dispProj').getAttribute('projKey');
+  const index = document.getElementById('dispProj').getAttribute('projID');
   let projList = JSON.parse(localStorage.getItem('projList'));
   let selectedTask = e.target.closest('li');
-  let taskKey = Number(selectedTask.getAttribute('key'));
+  let taskKey = Number(selectedTask.getAttribute('taskID'));
   let taskList = projList[index].taskList;
   for (let i = taskList.length-1; i > -1; i--){
-    if(Number(taskList[i].key) === taskKey){
+    if(Number(taskList[i].taskID) === taskKey){
       projList[index].taskList.splice(i,1);
       localStorage.setItem('projList',JSON.stringify(projList));
     }
@@ -238,8 +246,8 @@ function toggleComplete(e, task){
   checkBox.classList.toggle('unchecked');
   saveTask(task);
 }
-function storeTask(task, date){
-  const index = document.getElementById('dispProj').getAttribute('projKey');
+function storeTask(task){
+  const index = document.getElementById('dispProj').getAttribute('projID');
   let projList = JSON.parse(localStorage.getItem('projList'));
   let taskList = projList[index].taskList;
   taskList.push(task);
@@ -248,8 +256,8 @@ function storeTask(task, date){
 }
 function saveTask(task){
   const projList = JSON.parse(localStorage.getItem('projList'));
-  const projKey = document.getElementById('dispProj').getAttribute('projKey');
-  const taskKey = task.key;
+  const projKey = document.getElementById('dispProj').getAttribute('projID');
+  const taskKey = task.taskID;
   //Update in storage
   projList[projKey].taskList[taskKey] = task;
   localStorage.setItem('projList', JSON.stringify(projList));

@@ -1,9 +1,9 @@
 import { renderProjTasks } from "./tasks";
 
-export function createProj(projName, projKey){
+export function createProj(projName, projID){
     return{
         projName,
-        projKey,
+        projID,
         taskList: [],
     }
 }
@@ -12,19 +12,20 @@ export function renderProjList(){
     let projList = JSON.parse(localStorage.getItem('projList'));
     clearProjects();
     for(let i = 0; i < projList.length; i++){
-        const project = renderProject(projList[i], i, "project");
+        const project = renderProject(projList[i], "project");
         projects.appendChild(project);
     }
     localStorage.setItem('projList', JSON.stringify(projList));
 }
-function renderProject(proj, key, listType){
+function renderProject(proj, listType){
     const project = document.createElement('div');
     project.classList.add('project');
     const projTitle = document.createElement('button');
     projTitle.innerHTML = proj.projName;
     projTitle.classList.add('projTitle');
+    const projID = proj.projID;
     projTitle.addEventListener('click', ()=>{
-        renderProjTasks(key);
+        renderProjTasks(projID);
         showTaskAdd();
     })
     project.appendChild(projTitle);
@@ -39,10 +40,10 @@ function renderProject(proj, key, listType){
         delProj.addEventListener('click',(e)=>{
             deleteProj(e);
         });
-        delProj.setAttribute('key', key);
+        delProj.setAttribute('projID', projID);
         project.appendChild(delProj);   
     }
-    proj.projKey = key;
+    // proj.projKey = key;
     return project;
 }   
 function renderModForm(proj){
@@ -79,23 +80,25 @@ function renderModForm(proj){
 export function processProject(e){
     e.preventDefault();
     const title = document.getElementById('newProj');
-    let numProj = Number(localStorage.getItem('numProj'));
-    storeProject(createProj(title.value, numProj));
+    let projID = Number(localStorage.getItem('projID'));
+    storeProject(createProj(title.value, projID));
+    projID++;
+    localStorage.setItem('projID', projID);
     title.value = "";
 }
 function storeProject(project){
+    console.log(project);
     let projList = JSON.parse(localStorage.getItem('projList'));
     projList.push(project);
     localStorage.setItem('projList', JSON.stringify(projList));
-    localStorage.setItem('numProj', projList.length);
 }
 function deleteProj(e){
-    let projKey = Number((e.target).getAttribute('key'));
+    let projID = Number((e.target).getAttribute('projID'));
     let projList = JSON.parse(localStorage.getItem('projList'));
 
     for(let i = projList.length-1; i > -1; i--){
-        if(projList[i].projKey === projKey){
-            console.log(i);
+        if(projList[i].projID === projID){
+            // console.log(i);
             projList.splice(i,1);
             localStorage.setItem('projList', JSON.stringify(projList));
         }
@@ -115,10 +118,10 @@ function saveProjName(e){
     const newName = e.target.closest('div').querySelector('.modForm').value;
     if(newName !==""){ //Change name if new name populated, else, no change
         console.log(newName);
-        const key = e.target.closest('div').querySelector('.delProj')
-                     .getAttribute('key');
+        const projID = e.target.closest('div').querySelector('.delProj')
+                     .getAttribute('projID');
         const projList = JSON.parse(localStorage.getItem('projList'));
-        projList[key].projName = newName;
+        projList[projID].projName = newName;
         localStorage.setItem('projList', JSON.stringify(projList));
         renderProjList();
     }
