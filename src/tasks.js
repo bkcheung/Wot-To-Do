@@ -1,3 +1,4 @@
+import { dispAllTasks, dispTodayTasks } from './home';
 const dayjs = require('dayjs');
 
 export function createTask(title, dueDate, priority, taskID, projID){
@@ -204,10 +205,8 @@ function processModTask(e){
   const modP = modTask.querySelector('.prioritySel').innerHTML;
 
   const projList = JSON.parse(localStorage.getItem('projList'));
-  // const projID = document.getElementById('dispProj').getAttribute('projID');
   const taskID = e.target.closest('li').getAttribute('taskID');
   const projID = e.target.closest('li').getAttribute('projID');
-  // console.log(taskID);
   //Update in storage
   let pIndex = projList.findIndex(item => {
     if (item.projID===Number(projID)) return true;
@@ -217,17 +216,15 @@ function processModTask(e){
     if (item.taskID===Number(taskID)) return true;
   });
   const task = taskList[tIndex];
-  // console.log(task);
   task.title = modTitle;
   task.dueDate = dayjs(modDate).format('MM/DD/YYYY');
   task.priority = modP;
   
   localStorage.setItem('projList', JSON.stringify(projList));
   toggleTaskMod(e);
-  renderProjTasks(projID);
+  refreshPage();
 }
 function deleteTask(e){
-  // const projID = document.getElementById('dispProj').getAttribute('projID');
   let selectedTask = e.target.closest('li');
   let projID = selectedTask.getAttribute('projID');
   let projList = JSON.parse(localStorage.getItem('projList'));
@@ -242,7 +239,7 @@ function deleteTask(e){
       localStorage.setItem('projList',JSON.stringify(projList));
     }
   }
-  renderProjTasks([projID]);
+  refreshPage();
 }
 function toggleTaskMod(e){
   const task = e.target.closest('li');
@@ -261,7 +258,6 @@ function toggleComplete(e, task){
   saveTask(task);
 }
 function storeTask(task){
-  // const projID = document.getElementById('dispProj').getAttribute('projID');
   const projID = task.projID;
   let projList = JSON.parse(localStorage.getItem('projList'));
   let pIndex = projList.findIndex(item=>{
@@ -275,10 +271,29 @@ function storeTask(task){
 }
 function saveTask(task){
   const projList = JSON.parse(localStorage.getItem('projList'));
-  // const projKey = document.getElementById('dispProj').getAttribute('projID');
-  const projKey = task.projID;
-  const taskKey = task.taskID;
+  const projID = task.projID;
+  const pIndex = projList.findIndex(item=>{
+    if(item.projID===Number(projID)) return true;
+  })
+  const taskList = projList[pIndex].taskList;
+  const taskID = task.taskID;
+  let tIndex = taskList.findIndex(item=>{
+    if(item.taskID===Number(taskID)) return true;
+  })
   //Update in storage
-  projList[projKey].taskList[taskKey] = task;
+  taskList[tIndex] = task;
   localStorage.setItem('projList', JSON.stringify(projList));
+}
+
+function refreshPage(){
+  const pageID = document.getElementById('dispProj').getAttribute('projID');
+  if(pageID==="0"){
+    dispAllTasks();
+  }
+  else if (pageID==="1"){
+    dispTodayTasks();
+  }
+  else{
+    renderProjTasks(pageID);
+  }
 }
