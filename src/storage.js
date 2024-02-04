@@ -32,7 +32,7 @@ export function storageAvailable(type) {
 
   function defaultList(){
     const newProj = createProj('New Project', 2);
-    const defaultTask = createTask('Example Task',new Date(),'Low', 0);
+    const defaultTask = createTask('Example Task',new Date(),'Low', 0, 2);
     newProj.taskList.push(defaultTask);
     return newProj;
   }

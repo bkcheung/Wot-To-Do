@@ -1,11 +1,12 @@
 const dayjs = require('dayjs');
 
-export function createTask(title, dueDate, priority, taskID){
+export function createTask(title, dueDate, priority, taskID, projID){
     return {
       title,
       dueDate: dayjs(dueDate).format('MM/DD/YYYY'),
       priority,
       taskID,
+      projID,
       complete: false,
     }
 }
@@ -13,6 +14,7 @@ export function renderTask(task){
     const taskItem = document.createElement('li');
     taskItem.classList.add('task');
     taskItem.setAttribute('taskID', task.taskID);
+    taskItem.setAttribute('projID', task.projID);
 
     const taskMain = document.createElement('div');
     taskMain.classList.add('taskMain');
@@ -181,8 +183,9 @@ export function processTask(e) {
     let dateV = date.value;
     if(dateV === ""){dateV = new Date();}
     const priority = document.getElementById('taskPriority');
+    const projID = Number(document.getElementById('dispProj').getAttribute('projID'));
     const addTask = createTask(title.value, dateV, 
-                              priority.getAttribute('data-value'), taskID);
+                              priority.getAttribute('data-value'), taskID, projID);
     taskID++;
     localStorage.setItem('taskID', taskID);
     storeTask(addTask);
@@ -201,9 +204,10 @@ function processModTask(e){
   const modP = modTask.querySelector('.prioritySel').innerHTML;
 
   const projList = JSON.parse(localStorage.getItem('projList'));
-  const projID = document.getElementById('dispProj').getAttribute('projID');
+  // const projID = document.getElementById('dispProj').getAttribute('projID');
   const taskID = e.target.closest('li').getAttribute('taskID');
-  console.log(taskID);
+  const projID = e.target.closest('li').getAttribute('projID');
+  // console.log(taskID);
   //Update in storage
   let pIndex = projList.findIndex(item => {
     if (item.projID===Number(projID)) return true;
@@ -213,7 +217,7 @@ function processModTask(e){
     if (item.taskID===Number(taskID)) return true;
   });
   const task = taskList[tIndex];
-  console.log(task);
+  // console.log(task);
   task.title = modTitle;
   task.dueDate = dayjs(modDate).format('MM/DD/YYYY');
   task.priority = modP;
@@ -223,12 +227,13 @@ function processModTask(e){
   renderProjTasks(projID);
 }
 function deleteTask(e){
-  const projID = document.getElementById('dispProj').getAttribute('projID');
+  // const projID = document.getElementById('dispProj').getAttribute('projID');
+  let selectedTask = e.target.closest('li');
+  let projID = selectedTask.getAttribute('projID');
   let projList = JSON.parse(localStorage.getItem('projList'));
   let pIndex = projList.findIndex(item=>{
     if(item.projID===Number(projID)) return true;
   });
-  let selectedTask = e.target.closest('li');
   let taskKey = Number(selectedTask.getAttribute('taskID'));
   let taskList = projList[pIndex].taskList;
   for (let i = taskList.length-1; i > -1; i--){
@@ -256,7 +261,8 @@ function toggleComplete(e, task){
   saveTask(task);
 }
 function storeTask(task){
-  const projID = document.getElementById('dispProj').getAttribute('projID');
+  // const projID = document.getElementById('dispProj').getAttribute('projID');
+  const projID = task.projID;
   let projList = JSON.parse(localStorage.getItem('projList'));
   let pIndex = projList.findIndex(item=>{
     if(item.projID===Number(projID)) return true;
@@ -269,7 +275,8 @@ function storeTask(task){
 }
 function saveTask(task){
   const projList = JSON.parse(localStorage.getItem('projList'));
-  const projKey = document.getElementById('dispProj').getAttribute('projID');
+  // const projKey = document.getElementById('dispProj').getAttribute('projID');
+  const projKey = task.projID;
   const taskKey = task.taskID;
   //Update in storage
   projList[projKey].taskList[taskKey] = task;
