@@ -77,6 +77,7 @@ export function renderProjTasks(projID){
     if (item.projID===Number(projID)) return true;
   });
   const project = projList[pIndex];
+  console.log(project);
   const taskList = document.getElementById('taskList');
   const projTitle = document.getElementById('dispProj');
   projTitle.innerHTML = project.projName;
@@ -207,7 +208,7 @@ function processModTask(e){
   let pIndex = projList.findIndex(item => {
     if (item.projID===Number(projID)) return true;
   });
-  let taskList = projList[projID].taskList;
+  let taskList = projList[pIndex].taskList;
   let tIndex = taskList.findIndex(item => {
     if (item.taskID===Number(taskID)) return true;
   });
@@ -222,18 +223,21 @@ function processModTask(e){
   renderProjTasks(projID);
 }
 function deleteTask(e){
-  const index = document.getElementById('dispProj').getAttribute('projID');
+  const projID = document.getElementById('dispProj').getAttribute('projID');
   let projList = JSON.parse(localStorage.getItem('projList'));
+  let pIndex = projList.findIndex(item=>{
+    if(item.projID===Number(projID)) return true;
+  });
   let selectedTask = e.target.closest('li');
   let taskKey = Number(selectedTask.getAttribute('taskID'));
-  let taskList = projList[index].taskList;
+  let taskList = projList[pIndex].taskList;
   for (let i = taskList.length-1; i > -1; i--){
     if(Number(taskList[i].taskID) === taskKey){
-      projList[index].taskList.splice(i,1);
+      projList[pIndex].taskList.splice(i,1);
       localStorage.setItem('projList',JSON.stringify(projList));
     }
   }
-  renderProjTasks([index]);
+  renderProjTasks([projID]);
 }
 function toggleTaskMod(e){
   const task = e.target.closest('li');
@@ -252,12 +256,16 @@ function toggleComplete(e, task){
   saveTask(task);
 }
 function storeTask(task){
-  const index = document.getElementById('dispProj').getAttribute('projID');
+  const projID = document.getElementById('dispProj').getAttribute('projID');
   let projList = JSON.parse(localStorage.getItem('projList'));
-  let taskList = projList[index].taskList;
+  let pIndex = projList.findIndex(item=>{
+    if(item.projID===Number(projID)) return true;
+  })
+  let taskList = projList[pIndex].taskList;
   taskList.push(task);
+  console.log(taskList);
   localStorage.setItem('projList',JSON.stringify(projList));
-  renderProjTasks(index);
+  renderProjTasks(projID);
 }
 function saveTask(task){
   const projList = JSON.parse(localStorage.getItem('projList'));

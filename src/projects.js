@@ -120,7 +120,10 @@ function saveProjName(e){
         const projID = e.target.closest('div').querySelector('.delProj')
                      .getAttribute('projID');
         const projList = JSON.parse(localStorage.getItem('projList'));
-        projList[projID].projName = newName;
+        let pIndex = projList.findIndex(item => {
+            if(item.projID === Number(projID)) return true;
+        })
+        projList[pIndex].projName = newName;
         localStorage.setItem('projList', JSON.stringify(projList));
         renderProjList();
     }

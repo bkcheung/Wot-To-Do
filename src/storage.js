@@ -22,7 +22,7 @@ export function storageAvailable(type) {
     let projID = localStorage.getItem('projID');
     let taskID = localStorage.getItem('taskID');
     projList =  JSON.parse(projList || JSON.stringify(defaultProjList));
-    projID = projID || 1;
+    projID = projID || 3;
     taskID = taskID || 1;
     localStorage.setItem('projList',JSON.stringify(projList));
     localStorage.setItem('projID', projID);
@@ -31,7 +31,7 @@ export function storageAvailable(type) {
   }
 
   function defaultList(){
-    const newProj = createProj('New Project', 0);
+    const newProj = createProj('New Project', 2);
     const defaultTask = createTask('Example Task',new Date(),'Low', 0);
     newProj.taskList.push(defaultTask);
     return newProj;
