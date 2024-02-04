@@ -204,7 +204,15 @@ function processModTask(e){
   const taskID = e.target.closest('li').getAttribute('taskID');
   console.log(taskID);
   //Update in storage
-  const task = projList[projID].taskList[taskID];
+  let pIndex = projList.findIndex(item => {
+    if (item.projID===Number(projID)) return true;
+  });
+  let taskList = projList[projID].taskList;
+  let tIndex = taskList.findIndex(item => {
+    if (item.taskID===Number(taskID)) return true;
+  });
+  const task = taskList[tIndex];
+  console.log(task);
   task.title = modTitle;
   task.dueDate = dayjs(modDate).format('MM/DD/YYYY');
   task.priority = modP;

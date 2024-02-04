@@ -5,10 +5,10 @@ module.exports = {
   mode: 'production',
   entry: {
     index: './src/index.js',
-    init: './src/init.js',
-    tasks: './src/tasks.js',
-    projects: './src/projects.js',
-    storage: './src/storage.js'
+    // init: './src/init.js',
+    // tasks: './src/tasks.js',
+    // projects: './src/projects.js',
+    // storage: './src/storage.js'
   },
   devtool: 'inline-source-map',
   devServer: {
