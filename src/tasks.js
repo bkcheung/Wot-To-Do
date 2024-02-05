@@ -80,7 +80,6 @@ export function renderProjTasks(projID){
     if (item.projID===Number(projID)) return true;
   });
   const project = projList[pIndex];
-  console.log(project);
   const taskList = document.getElementById('taskList');
   const projTitle = document.getElementById('dispProj');
   projTitle.innerHTML = project.projName;
