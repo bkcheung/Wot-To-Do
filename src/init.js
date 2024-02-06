@@ -6,7 +6,7 @@ import { dispAllTasks, dispTodayTasks } from "./home";
 export function pageInit(){
     listStorage();
     renderProjList(projList);
-    renderProjTasks(2);
+    dispAllTasks();
 
     const menu = document.getElementById('menu');
     const pageLeft = document.getElementById('pageLeft');
