@@ -61,7 +61,7 @@ export function renderTask(task){
       case 'Low':
         taskItem.setAttribute('style','border-left: 4px solid green');
         break;
-    };
+    }
     const modForm = taskModForm(task);
     
     taskMain.appendChild(checkBox);

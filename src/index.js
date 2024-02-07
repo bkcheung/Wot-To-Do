@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import './style.css';
 import { pageInit } from './init';
 import { storageAvailable } from './storage';

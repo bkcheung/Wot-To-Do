@@ -1,12 +1,13 @@
-import { processTask, renderProjTasks } from "./tasks";
+import { processTask } from "./tasks";
 import { processProject, renderProjList } from "./projects";
 import { listStorage } from "./storage";
 import { dispAllTasks, dispTodayTasks } from "./home";
 
 export function pageInit(){
     listStorage();
-    renderProjList(projList);
+    renderProjList();
     dispAllTasks();
+    hideTaskAdd();
 
     const menu = document.getElementById('menu');
     const pageLeft = document.getElementById('pageLeft');
@@ -19,6 +20,7 @@ export function pageInit(){
     const submit = document.getElementById('addTaskButton')
     const addProj = document.getElementById('addProj');
     const addProjSubmit = document.getElementById('subProj');
+    const addTask = document.getElementById('addTask');
     const newTitle = document.getElementById('newTitle');
     const newProj = document.getElementById('newProj');
 
